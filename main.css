@@ -1,0 +1,119 @@
+/* main.css - Full Concept */
+
+/* Lucide Icons Font Face */
+@font-face {
+    font-family: 'LucideIcons';
+    src: url(https://cdn.jsdelivr.net/npm/lucide-static@latest/font/lucide.ttf) format('truetype');
+  }
+  /* Lucide Icon Base Class */
+  .lucide {
+      font-family: 'LucideIcons'; font-style: normal; font-weight: normal; font-variant: normal;
+      text-rendering: auto; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+      display: inline-block;
+  }
+  
+  /* Base Body Styles */
+  body {
+    font-family: 'Inter', sans-serif; /* Default font */
+    background-color: #F8F4EC; /* Primary Background */
+    color: #1f2937; /* Dark Grey Text */
+    overflow-x: hidden;
+  }
+  
+  /* Initial animation states */
+  .animate-element { opacity: 0; transform: translateY(20px); }
+  .animate-left { opacity: 0; transform: translateX(-40px); }
+  .animate-right { opacity: 0; transform: translateX(40px); }
+  .animate-stagger-item { opacity: 0; transform: translateY(20px); }
+  .animate-fade { opacity: 0; transform: none; }
+  
+  /* Reset transform if multiple classes are used */
+  .animate-left.animate-element, .animate-right.animate-element,
+  .animate-stagger-item.animate-element, .animate-fade.animate-element { transform: none; }
+  /* Re-apply specific transforms */
+  .animate-left { transform: translateX(-40px); }
+  .animate-right { transform: translateX(40px); }
+  .animate-stagger-item { transform: translateY(20px); }
+  .animate-fade { transform: none; }
+  
+  /* Header initial state for fade-in */
+  header { opacity: 0; }
+  
+  /* --- Headline Font Styles --- */
+  /* Apply Oswald to Major Headlines using specific classes */
+  .hero-headline, .trust-headline, .we-will-headline, .value-prop-headline,
+  .core-belief-headline, .team-headline, .faq-headline, .final-cta-headline {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700; /* Default bold weight for Oswald */
+      text-transform: uppercase;
+      letter-spacing: -0.02em; /* Optional tightening */
+  }
+  
+  /* Hero Section Specific Styles */
+  .hero-headline {
+    font-size: 10vw; line-height: 1; font-weight: 800; /* Use ExtraBold for hero */
+    letter-spacing: -0.05em; position: relative; opacity: 0; transform: translateY(30px);
+    font-family: 'Oswald', sans-serif; /* Explicit override */
+  }
+  #hero-subtext, #hero-button { opacity: 0; transform: translateY(20px); }
+  .hero-headline .img-placeholder-wrapper { display: inline-block; position: relative; vertical-align: baseline; }
+  .hero-headline .img-placeholder { position: absolute; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); object-fit: cover; opacity: 0; transform: scale(0.8); }
+  .hero-headline .img-placeholder.pos-l { top: 0; left: 50%; transform: translate(-50%, -20%) scale(0.8); width: 4vw; height: 4vw; min-width: 40px; min-height: 40px; border-radius: 9999px; }
+  .hero-headline .img-placeholder.pos-s { bottom: 0; left: 50%; transform: translate(-50%, 20%) scale(0.8); width: 4vw; height: 4vw; min-width: 40px; min-height: 40px; border-radius: 9999px; }
+  
+  /* Squiggle Style */
+  .squiggle { width: 120px; height: auto; stroke: #6C63FF; stroke-width: 3; fill: none; stroke-dasharray: 500; stroke-dashoffset: 500; }
+  
+  /* Testimonial Slider Styles */
+  .testimonial-card { width: 100%; flex-shrink: 0; box-sizing: border-box; }
+  
+  /* Core Belief SVG Divider Style */
+  .core-belief-divider { stroke: #6b7280; fill: #6b7280; }
+  .core-belief-divider circle { stroke-width: 1; fill: none; }
+  .core-belief-divider path { /* Style heart paths if needed */ }
+  
+  /* Core Belief List Styles */
+  section.bg-\[\#CAD3B8\] ul { list-style-position: outside; padding-left: 1.25rem; }
+  section.bg-\[\#CAD3B8\] li { padding-left: 0.25rem; }
+  
+  /* Team Section Info Box Styles */
+  .team-info-box {
+      border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 0.5rem; padding: 1rem;
+      background-color: #F8F4EC; transition: box-shadow 0.2s ease-in-out;
+  }
+  .team-info-box:hover { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); }
+  
+  /* FAQ Accordion Styles */
+  .faq-question {
+      display: flex; justify-content: space-between; align-items: center; width: 100%;
+      text-align: left; padding: 1rem 0; cursor: pointer; background: none; border: none;
+      font-weight: 700; color: inherit;
+  }
+  .faq-question span:first-child { padding-right: 1rem; }
+  .faq-icon { font-size: 1.5rem; color: #6C63FF; transition: transform 0.3s ease-in-out; flex-shrink: 0; }
+  .faq-item-js.active .faq-icon { transform: rotate(45deg); }
+  .faq-answer {
+      overflow: hidden; max-height: 0; opacity: 0; padding: 0;
+      transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out, opacity 0.3s ease-in-out;
+      color: #4b5563; font-size: 0.9rem; line-height: 1.6;
+  }
+  .faq-answer p { padding-bottom: 1rem; }
+  .faq-item-js.active .faq-answer { opacity: 1; padding-top: 0.5rem; padding-bottom: 1rem; }
+  
+  /* Navigation Link Styles */
+  .nav-link { position: relative; transition: color 0.2s ease-in-out; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; font-weight: 500; }
+  .nav-link::after { content: ''; position: absolute; width: 0; height: 1px; display: block; margin-top: 2px; right: 0; background: #6C63FF; transition: width 0.3s ease; }
+  .nav-link:hover::after { width: 100%; left: 0; background-color: #6C63FF; }
+  .nav-link:hover { color: #1f2937; }
+  
+  /* Button Base Styles & Transitions */
+  .btn { transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
+  
+  /* Enhanced Hover Effects for Buttons */
+  .btn-primary:hover { transform: scale(1.03); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+  .btn-secondary:hover { transform: scale(1.03); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+  
+  /* Testimonial Arrow Styles */
+  .testimonial-arrow { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid #e5e7eb; border-radius: 9999px; color: #6b7280; background-color: white; cursor: pointer; transition: all 0.2s ease-in-out; }
+  .testimonial-arrow:hover { background-color: #f3f4f6; border-color: #d1d5db; color: #1f2937; transform: scale(1.1); }
+  
