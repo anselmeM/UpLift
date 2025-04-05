@@ -1,4 +1,4 @@
-// app.js - Added console logs for debugging mobile menu listener
+// app.js - Attempting full implementation of user's original menu logic
 
 function initializeAnimations() {
     console.log("Initializing animations AFTER preloader...");
@@ -36,7 +36,6 @@ function initializeAnimations() {
         if (heroButton) {
             heroTl.to(heroButton, { opacity: 1, y: 0 }, "-=0.7");
         }
-        // console.log("Hero animation timeline created."); // Keep console less cluttered
     } catch (error) {
         console.error("Error creating hero timeline:", error);
     }
@@ -44,7 +43,6 @@ function initializeAnimations() {
      // --- Header Fade-in ---
      try {
          gsap.to('header', { opacity: 1, duration: 1, delay: 0.3 });
-         // console.log("Header animation created.");
      } catch (error) {
          console.error("Error creating header animation:", error);
      }
@@ -64,7 +62,6 @@ function initializeAnimations() {
                 }
             });
         });
-        // console.log(`Parallax effect applied to ${parallaxSections.length} sections.`);
     } catch (error) {
         console.error("Error applying parallax effect:", error);
     }
@@ -84,7 +81,6 @@ function initializeAnimations() {
                 }
             });
         });
-         // console.log(`Scroll-linked horizontal movement applied to ${scrubXElements.length} elements (excluding conflicting items).`);
     } catch (error) {
         console.error("Error applying scroll-linked horizontal movement:", error);
     }
@@ -96,7 +92,6 @@ function initializeAnimations() {
         const scrollTrack = document.getElementById('horizontal-scroll-track');
 
         if (scrollContainer && scrollTrack) {
-            // console.log("Setting up horizontal scroll...");
             let scrollTween = gsap.to(scrollTrack, {
                 x: () => -(scrollTrack.scrollWidth - scrollContainer.offsetWidth) + "px",
                 ease: "none",
@@ -109,7 +104,6 @@ function initializeAnimations() {
                     invalidateOnRefresh: true
                 }
             });
-             // console.log("Horizontal scroll tween created.");
 
             const slides = gsap.utils.toArray('.slide');
             slides.forEach((slide, index) => {
@@ -155,7 +149,6 @@ function initializeAnimations() {
                      }
                  }
             });
-             // console.log("Animations within horizontal slides set up for heading, description, and image.");
 
         } else {
             console.warn("Horizontal scroll container or track not found.");
@@ -169,7 +162,6 @@ function initializeAnimations() {
     // --- Standard Scroll-Triggered Entrance Animations (Sections NOT in horizontal scroll) ---
     try {
         const sections = gsap.utils.toArray('.animate-section:not(.horizontal-scroll-section)');
-        // console.log(`Found ${sections.length} sections for standard entrance animations.`);
 
         sections.forEach((section, index) => {
             const leftElements = section.querySelectorAll('.animate-left');
@@ -200,7 +192,6 @@ function initializeAnimations() {
                 if (squiggle) { tl.to(squiggle, { strokeDashoffset: 0, duration: 1.5, ease: 'power2.inOut' }, "-=0.5"); }
             }
         });
-         // console.log("Standard ScrollTrigger entrance animations set up.");
      } catch (error) {
          console.error("Error setting up standard ScrollTrigger entrance animations:", error);
      }
@@ -232,7 +223,6 @@ function initializeAnimations() {
             updateSlides(currentIndex);
             prevButton.addEventListener('click', () => goToSlide(currentIndex - 1));
             nextButton.addEventListener('click', () => goToSlide(currentIndex + 1));
-            // console.log(`Testimonial slider initialized with ${totalSlides} slides.`);
         } else {
             console.warn("Testimonial slider elements not found.");
         }
@@ -287,7 +277,6 @@ function initializeAnimations() {
                     });
                 }
             });
-             // console.log(`Custom FAQ accordion initialized for ${faqItems.length} items.`);
         } else {
             // console.log("No custom FAQ items found.");
         }
@@ -296,74 +285,108 @@ function initializeAnimations() {
     }
 
 
-    // --- Animated Mobile Menu Logic (Using matchMedia) ---
-    ScrollTrigger.matchMedia({
-        // Setup for mobile breakpoint (below md: 768px)
-        "(max-width: 767px)": function() {
-            console.log("MATCHMEDIA: Setting up mobile menu animation."); // Log: Setup starts
-            const menuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            let menuTimeline;
+    // --- NEW Overlay Menu Logic (Full Implementation Attempt) ---
+    try {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const overlay = document.querySelector('.nsd-menu-overlay');
+        const overlayLeft = document.querySelector('.nsd-menu-overlay__content_part__left');
+        const overlayRight = document.querySelector('.nsd-menu-overlay__content_part__right');
+        const overlayItems = gsap.utils.toArray('.nsd-menu-overlay__content_part__left ul.nsd-menu-fullscreen .fullscreen-single__item');
 
-            // Log whether elements were found
-            console.log("MATCHMEDIA: Found menuButton?", !!menuButton);
-            console.log("MATCHMEDIA: Found mobileMenu?", !!mobileMenu);
+        // Check if all essential elements exist
+        if (menuToggle && overlay && overlayLeft && overlayRight && overlayItems.length > 0) {
+            console.log("Setting up FULL overlay menu animation.");
 
-            if (menuButton && mobileMenu) {
-                gsap.set(mobileMenu, { height: 0, opacity: 0, visibility: 'hidden' });
-                menuTimeline = gsap.timeline({ paused: true, reversed: true });
-                menuTimeline.to(mobileMenu, {
-                    height: 'auto',
-                    opacity: 1,
-                    visibility: 'visible',
-                    duration: 0.4,
+            // Set initial states using GSAP (autoAlpha handles visibility+opacity)
+            gsap.set(overlay, { yPercent: -100, autoAlpha: 0 });
+            gsap.set(overlayLeft, { yPercent: 100 }); // Start left part below
+            gsap.set(overlayItems, { rotate: 5, y: 250, skewY: 10, autoAlpha: 0 }); // Items transformed and hidden
+            gsap.set(overlayRight, { y: 50, autoAlpha: 0 }); // Right part slightly down and hidden
+
+            // Create the GSAP 3 timeline, initially paused and reversed (closed state)
+            const headerOverlayTimeline = gsap.timeline({ paused: true, reversed: true });
+
+            // Define the animation sequence based on original logic
+            headerOverlayTimeline
+                .to(overlay, { duration: 1, yPercent: 0, autoAlpha: 1, ease: 'power2.out' }) // Animate overlay in (duration 1)
+                .to(overlayLeft, { duration: 1, yPercent: 0, ease: 'power2.out' }, "-=1") // Animate left part in (duration 1, start same time as overlay)
+                .to(overlayItems, { // Animate menu items in
+                    duration: 0.8, // Duration from original logic? (was implicit) - using 0.8
+                    autoAlpha: 1,
+                    rotate: 0,
+                    y: 0,
+                    skewY: 0,
+                    stagger: 0.2, // Stagger from original logic
+                    ease: 'power3.out' // Example ease
+                }, "-=0.5") // Start 0.5s before the end of the previous tweens
+                .to(overlayRight, { // Animate right part in
+                    duration: 0.5, // Duration from original logic
+                    y: 0,
+                    autoAlpha: 1,
                     ease: 'power2.out'
-                });
+                }, "-=0.5"); // Start 0.5s before the end of the item animation
 
-                // Define the click handler function
-                const toggleMenu = () => {
-                    console.log("HANDLER: toggleMenu function executed!"); // Log: Handler runs
-                    console.log("HANDLER: Timeline reversed before toggle?", menuTimeline.reversed());
-                    menuTimeline.reversed(!menuTimeline.reversed());
-                    const isExpanded = !menuTimeline.reversed();
-                    menuButton.setAttribute('aria-expanded', isExpanded);
-                    console.log("HANDLER: Timeline reversed after toggle?", menuTimeline.reversed());
-                    console.log("HANDLER: aria-expanded set to", isExpanded);
-                };
+            // Click handler for the toggle button
+            const toggleOverlay = () => {
+                menuToggle.classList.toggle('active'); // Toggle class for hamburger/cross CSS animation
+                headerOverlayTimeline.reversed(!headerOverlayTimeline.reversed()); // Toggle GSAP timeline
 
-                // Add the event listener
-                menuButton.addEventListener('click', toggleMenu);
-                console.log("MATCHMEDIA: Event listener added to menuButton."); // Log: Listener added
+                // Optional: Toggle body scroll lock
+                // document.body.classList.toggle('overlay-active', !headerOverlayTimeline.reversed());
+            };
 
-                // Return a cleanup function
-                return () => {
-                    console.log("MATCHMEDIA: Cleaning up mobile menu animation.");
-                    menuButton.removeEventListener('click', toggleMenu);
-                    if (menuTimeline) {
-                        menuTimeline.kill();
+            menuToggle.addEventListener('click', toggleOverlay);
+            console.log("Full overlay menu listener added.");
+
+            // --- Submenu Logic (Vanilla JS - Basic Toggle) ---
+            // Based on original logic, using display block/none
+            const menuItemsWithSub = document.querySelectorAll('.nsd-menu-fullscreen .has-sub > a');
+            menuItemsWithSub.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const parentLi = item.parentElement;
+                    // Use :scope selector to find direct child submenu only
+                    const submenu = parentLi.querySelector(':scope > .sub-menu');
+                    if (!submenu) return; // Exit if no submenu found
+
+                    if (parentLi.classList.contains('open_sub')) {
+                        // Close current submenu
+                        submenu.style.display = 'none';
+                        parentLi.classList.remove('open_sub');
+                    } else {
+                        // Close siblings' submenus first
+                        parentLi.parentElement.querySelectorAll('.has-sub.open_sub').forEach(openItem => {
+                            if (openItem !== parentLi) {
+                                openItem.classList.remove('open_sub');
+                                const openSubmenu = openItem.querySelector(':scope > .sub-menu');
+                                if(openSubmenu) openSubmenu.style.display = 'none';
+                            }
+                        });
+                        // Open current submenu
+                        submenu.style.display = 'block'; // Simple show/hide
+                        parentLi.classList.add('open_sub');
                     }
-                    menuButton.setAttribute('aria-expanded', 'false');
-                };
-            } else {
-                 console.warn("MATCHMEDIA: Mobile menu button or panel not found for setup.");
-                 return () => {};
-            }
-        },
+                });
+            });
+             console.log("Submenu listeners added (basic toggle).");
 
-        // Setup for larger screens (md breakpoint and up)
-        "(min-width: 768px)": function() {
-            console.log("MATCHMEDIA: On desktop breakpoint, mobile menu animation inactive.");
-             const mobileMenu = document.getElementById('mobile-menu');
-             const menuButton = document.getElementById('mobile-menu-button');
-             if (mobileMenu) {
-                 gsap.set(mobileMenu, { height: 0, opacity: 0, visibility: 'hidden' });
-             }
-             if (menuButton) {
-                 menuButton.setAttribute('aria-expanded', 'false');
-             }
-            return () => { }; // No specific cleanup needed for desktop state
+
+        } else {
+            // Log which element(s) might be missing
+            console.warn("Could not find all elements required for the new overlay menu.", {
+                menuToggle: !!menuToggle,
+                overlay: !!overlay,
+                overlayLeft: !!overlayLeft,
+                overlayRight: !!overlayRight,
+                overlayItemsCount: overlayItems.length
+            });
         }
-    }); // End of matchMedia
+
+    } catch(error) {
+        // Catch errors during setup
+        console.error("Error setting up new overlay menu:", error);
+    }
+
 
     console.log("Uplift Concept Initialized.");
 } // End of initializeAnimations function
@@ -374,10 +397,9 @@ function handlePreloader() {
     const preloaderLogo = document.getElementById('preloader-logo');
     if (!preloader || !preloaderLogo) {
         console.warn("Preloader elements not found. Skipping preloader.");
-        // Make sure animations run even if preloader fails
-        if (document.readyState === "loading") { // Loading hasn't finished yet
+        if (document.readyState === "loading") {
             document.addEventListener("DOMContentLoaded", initializeAnimations);
-        } else { // `DOMContentLoaded` has already fired
+        } else {
             initializeAnimations();
         }
         return;
@@ -396,10 +418,11 @@ function handlePreloader() {
                 onComplete: () => {
                     preloader.style.display = 'none';
                     console.log("Preloader hidden. Initializing main animations...");
-                    initializeAnimations();
+                    initializeAnimations(); // Initialize animations AFTER preloader is gone
                 }
             }, "-=0.1");
     });
 }
 
+// Run preloader logic immediately
 handlePreloader();
