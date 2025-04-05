@@ -11,8 +11,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Oswald:wght@700;800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
     <link rel="stylesheet" href="main.css">
 
     <style>
@@ -44,50 +42,21 @@
                 <a href="#" class="nav-link text-sm font-medium text-gray-600">Manifesto</a>
                 <a href="#" class="nav-link text-sm font-medium text-gray-600">About Us</a>
             </div>
-            <div class="flex-shrink-0 hidden sm:block"> <a href="mailto:hello@upliftco.example.com?subject=Inquiry%20from%20Website" class="btn btn-primary bg-[#6C63FF] text-white px-5 py-2 rounded-md text-xs font-medium uppercase tracking-wider shadow no-underline"> Tell Us About You </a>
+            <div class="flex-shrink-0">
+                <a href="mailto:hello@upliftco.example.com?subject=Inquiry%20from%20Website" class="btn btn-primary bg-[#6C63FF] text-white px-5 py-2 rounded-md text-xs font-medium uppercase tracking-wider shadow no-underline"> Tell Us About You </a>
             </div>
-
-            <div class="menu-toggle fixed top-4 right-4 sm:right-6 lg:right-8 z-[60] md:hidden">
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <div class="cross">
-                    <span></span>
-                    <span></span>
-                </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-700 hover:text-black focus:outline-none" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
             </div>
         </nav>
+         <div id="mobile-menu" class="mobile-menu md:hidden mt-4 space-y-2 px-4" role="navigation" aria-label="Mobile Navigation">
+            <a href="#" class="block nav-link text-sm font-medium text-gray-600 py-1">What Founders Say</a>
+            <a href="#" class="block nav-link text-sm font-medium text-gray-600 py-1">Manifesto</a>
+            <a href="#" class="block nav-link text-sm font-medium text-gray-600 py-1">About Us</a>
+         </div>
     </header>
-
-    <div class="nsd-menu-overlay z-[55]">
-      <div class="container m-auto py-10 h-full">
-        <div class="nsd-menu-overlay__content flex flex-wrap overflow-hidden h-full items-center">
-          <div class="nsd-menu-overlay__content_part nsd-menu-overlay__content_part__left w-full overflow-hidden md:w-1/2 lg:w-1/2 xl:w-1/2 px-4">
-            <ul class="nsd-menu-fullscreen text-center md:text-left">
-              <li class="fullscreen-single__item">
-                <a href="#"><span>What Founders Say</span></a>
-              </li>
-              <li class="fullscreen-single__item">
-                <a href="#"><span>Manifesto</span></a>
-              </li>
-              <li class="fullscreen-single__item">
-                <a href="#"><span>About Us</span></a>
-              </li>
-              <li class="fullscreen-single__item">
-                 <a href="mailto:hello@upliftco.example.com?subject=Inquiry%20from%20Website"><span>Tell Us About You</span></a>
-              </li>
-              </ul>
-          </div>
-          <div class="nsd-menu-overlay__content_part nsd-menu-overlay__content_part__right w-full overflow-hidden md:w-1/2 lg:w-1/2 xl:w-1/2 px-4 mt-10 md:mt-0">
-            <div class="nsd-menu__intro">
-              <h1 class="nsd-menu__intro-title">Uplift Founders</h1> <p class="nsd-menu__intro-text">Empowering founders to become extraordinary leaders and scale their impact.</p> </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
 
     <main role="main">
         <section class="hero-section py-20 px-4 sm:px-6 lg:px-8 text-center max-w-5xl mx-auto overflow-hidden" role="region" aria-label="Hero Section">
@@ -375,5 +344,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
-    <script src="app.js"></script> </body>
+    <script src="app.js"></script>
+
+</body>
 </html>
