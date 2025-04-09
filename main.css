@@ -384,3 +384,74 @@
       color: #1f2937;
       transform: scale(1.1);
   }
+
+  /* ===================== IMPROVEMENTS ===================== */
+  /* Responsive Hero Headline Improvements */
+  .hero-headline {
+      font-size: clamp(2.5rem, 10vw, 6rem); /* More controlled responsive sizing */
+      line-height: 1.1; /* Slightly improved readability */
+      margin-bottom: 1.5rem; /* Consistent spacing */
+  }
+
+  /* Better hero image placeholder scaling */
+  @media (max-width: 640px) {
+      .hero-headline .img-placeholder {
+          width: 40px; /* Fixed size on small screens */
+          height: 40px;
+          min-width: 40px;
+          min-height: 40px;
+      }
+  }
+
+  @media (min-width: 641px) and (max-width: 1024px) {
+      .hero-headline .img-placeholder {
+          width: 3.5vw; /* Slightly smaller on medium screens */
+          height: 3.5vw;
+          min-width: 40px;
+          min-height: 40px;
+      }
+  }
+
+  /* Improved Mobile Menu Styles */
+  .mobile-menu {
+      height: 0;
+      opacity: 0;
+      overflow: hidden;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease, height 0.3s ease; /* Smoother transition */
+  }
+
+  .mobile-menu.active {
+      height: auto;
+      opacity: 1;
+      visibility: visible;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+  }
+
+  /* Mobile menu button improvements */
+  #mobile-menu-button {
+      position: relative;
+      z-index: 20;
+      transition: background-color 0.2s ease;
+  }
+
+  #mobile-menu-button:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  #mobile-menu-button:focus {
+      outline: 2px solid #6C63FF;
+      outline-offset: 2px;
+  }
+
+  /* Mobile menu link improvements */
+  .mobile-menu .nav-link {
+      display: block;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .mobile-menu .nav-link:last-child {
+      border-bottom: none;
+  }
