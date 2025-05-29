@@ -1,4 +1,4 @@
-// app.js - Added console logs for debugging mobile menu listener
+// app.js - Updated to force horizontal scroll on mobile + previous fixes
 
 function initializeAnimations() {
     console.log("Initializing animations AFTER preloader...");
@@ -36,7 +36,6 @@ function initializeAnimations() {
         if (heroButton) {
             heroTl.to(heroButton, { opacity: 1, y: 0 }, "-=0.7");
         }
-        // console.log("Hero animation timeline created."); // Keep console less cluttered
     } catch (error) {
         console.error("Error creating hero timeline:", error);
     }
@@ -44,7 +43,6 @@ function initializeAnimations() {
      // --- Header Fade-in ---
      try {
          gsap.to('header', { opacity: 1, duration: 1, delay: 0.3 });
-         // console.log("Header animation created.");
      } catch (error) {
          console.error("Error creating header animation:", error);
      }
@@ -64,7 +62,6 @@ function initializeAnimations() {
                 }
             });
         });
-        // console.log(`Parallax effect applied to ${parallaxSections.length} sections.`);
     } catch (error) {
         console.error("Error applying parallax effect:", error);
     }
@@ -84,39 +81,49 @@ function initializeAnimations() {
                 }
             });
         });
-         // console.log(`Scroll-linked horizontal movement applied to ${scrubXElements.length} elements (excluding conflicting items).`);
     } catch (error) {
         console.error("Error applying scroll-linked horizontal movement:", error);
     }
 
 
-    // --- Horizontal Scroll Logic & Inner Slide Animations ---
+    // --- Horizontal Scroll Logic & Inner Slide Animations (MODIFIED) ---
     try {
         const scrollContainer = document.getElementById('horizontal-scroll-container');
         const scrollTrack = document.getElementById('horizontal-scroll-track');
 
         if (scrollContainer && scrollTrack) {
-            // console.log("Setting up horizontal scroll...");
+            // *** REMOVED isMobile check to force horizontal scroll on all devices ***
+
+            // Ensure styles are set for horizontal layout, overriding potential mobile CSS/JS
+            scrollTrack.style.width = 'max-content'; // Allow it to be wider than the screen
+            scrollTrack.style.flexDirection = 'row';   // Force horizontal flex layout
+
+            // Always apply horizontal scroll logic
             let scrollTween = gsap.to(scrollTrack, {
                 x: () => -(scrollTrack.scrollWidth - scrollContainer.offsetWidth) + "px",
                 ease: "none",
                 scrollTrigger: {
                     trigger: scrollContainer,
-                    pin: true,
+                    pin: true, // Pins the section during horizontal scroll
                     scrub: 0.5,
                     start: "top top",
                     end: () => "+=" + (scrollTrack.scrollWidth - scrollContainer.offsetWidth),
                     invalidateOnRefresh: true
                 }
             });
-             // console.log("Horizontal scroll tween created.");
 
             const slides = gsap.utils.toArray('.slide');
-            slides.forEach((slide, index) => {
+            slides.forEach((slide) => {
+                // Ensure slide styles are set for horizontal view
+                slide.style.width = '100vw'; // Each slide takes full viewport width
+                slide.style.height = '100vh'; // Each slide takes full viewport height
+                slide.style.minHeight = 'auto'; // Reset mobile min-height
+
                 const heading = slide.querySelector('.slide__heading');
                 const description = slide.querySelector('.slide__description');
                 const imgCont = slide.querySelector('.slide__img-cont');
 
+                // Apply scroll-linked animations (same as desktop)
                 if (heading) {
                     gsap.from(heading, {
                         opacity: 0, y: 50, duration: 0.8, ease: 'power2.out',
@@ -126,7 +133,7 @@ function initializeAnimations() {
                         }
                     });
                 }
-                 if (description) {
+                if (description) {
                     gsap.from(description, {
                         opacity: 0, y: 40, duration: 0.8, ease: 'power2.out', delay: 0.1,
                         scrollTrigger: {
@@ -135,27 +142,28 @@ function initializeAnimations() {
                         }
                     });
                 }
-                 if (imgCont) {
-                     gsap.from(imgCont, {
-                         opacity: 0, scale: 0.9, duration: 1.0, ease: 'power3.out', delay: 0.2,
-                         scrollTrigger: {
-                             trigger: slide, containerAnimation: scrollTween,
-                             start: "left center", toggleActions: "play none none reverse"
-                         }
-                     });
-                     const image = imgCont.querySelector('.slide__img');
-                     if (image) {
-                         gsap.to(image, {
-                             xPercent: -8, ease: "none",
-                             scrollTrigger: {
-                                 trigger: slide, containerAnimation: scrollTween,
-                                 scrub: true, start: "left right", end: "right left"
-                             }
-                         });
-                     }
-                 }
+                if (imgCont) {
+                    gsap.from(imgCont, {
+                        opacity: 0, scale: 0.9, duration: 1.0, ease: 'power3.out', delay: 0.2,
+                        scrollTrigger: {
+                            trigger: slide, containerAnimation: scrollTween,
+                            start: "left center", toggleActions: "play none none reverse"
+                        }
+                    });
+                    const image = imgCont.querySelector('.slide__img');
+                    if (image) {
+                        gsap.to(image, {
+                            xPercent: -8, ease: "none",
+                            scrollTrigger: {
+                                trigger: slide, containerAnimation: scrollTween,
+                                scrub: true, start: "left right", end: "right left"
+                            }
+                        });
+                    }
+                }
             });
-             // console.log("Animations within horizontal slides set up for heading, description, and image.");
+
+            console.log("Horizontal scroll set up for ALL devices.");
 
         } else {
             console.warn("Horizontal scroll container or track not found.");
@@ -166,12 +174,14 @@ function initializeAnimations() {
     // --- End Horizontal Scroll Logic ---
 
 
-    // --- Standard Scroll-Triggered Entrance Animations (Sections NOT in horizontal scroll) ---
+    // --- Standard Scroll-Triggered Entrance Animations ---
     try {
         const sections = gsap.utils.toArray('.animate-section:not(.horizontal-scroll-section)');
-        // console.log(`Found ${sections.length} sections for standard entrance animations.`);
-
-        sections.forEach((section, index) => {
+        sections.forEach((section) => {
+             const tl = gsap.timeline({
+                scrollTrigger: { trigger: section, start: 'top 85%', toggleActions: 'play none none none' },
+                defaults: { ease: defaultEase, duration: defaultDuration }
+            });
             const leftElements = section.querySelectorAll('.animate-left');
             const rightElements = section.querySelectorAll('.animate-right');
             const staggerItems = section.querySelectorAll('.animate-stagger-item');
@@ -179,34 +189,21 @@ function initializeAnimations() {
             const defaultElements = section.querySelectorAll('.animate-element:not(.animate-left):not(.animate-right):not(.animate-stagger-item):not(.animate-fade)');
             const revealImages = section.querySelectorAll('.reveal-image');
             const squiggle = section.querySelector('.squiggle #squiggle-path');
-
-            if (leftElements.length || rightElements.length || staggerItems.length || defaultElements.length || fadeElements.length || revealImages.length || squiggle) {
-                const tl = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: section,
-                        start: 'top 85%',
-                        toggleActions: 'play none none none'
-                    },
-                    defaults: { ease: defaultEase, duration: defaultDuration }
-                });
-
-                let position = "<";
-                if (leftElements.length > 0) { tl.to(leftElements, { opacity: 1, x: 0, stagger: 0.15 }, position); position = "<0.1"; }
-                if (rightElements.length > 0) { tl.to(rightElements, { opacity: 1, x: 0, stagger: 0.15 }, position); position = "<0.1"; }
-                if (fadeElements.length > 0) { tl.to(fadeElements, { opacity: 1, stagger: 0.15 }, position); position = "<0.1"; }
-                if (defaultElements.length > 0) { tl.to(defaultElements, { opacity: 1, y: 0, stagger: 0.1 }, position); position = "<0.1"; }
-                if (staggerItems.length > 0) { tl.to(staggerItems, { opacity: 1, y: 0, stagger: 0.1 }, position); position = "<0.1"; }
-                if (revealImages.length > 0) { tl.to(revealImages, { clipPath: 'inset(0% 0% 0% 0%)', stagger: 0.2, duration: 1.2, ease: 'power3.out' }, "<"); }
-                if (squiggle) { tl.to(squiggle, { strokeDashoffset: 0, duration: 1.5, ease: 'power2.inOut' }, "-=0.5"); }
-            }
+            let pos = "<";
+            if (leftElements.length > 0) { tl.to(leftElements, { opacity: 1, x: 0, stagger: 0.15 }, pos); pos = "<0.1"; }
+            if (rightElements.length > 0) { tl.to(rightElements, { opacity: 1, x: 0, stagger: 0.15 }, pos); pos = "<0.1"; }
+            if (fadeElements.length > 0) { tl.to(fadeElements, { opacity: 1, stagger: 0.15 }, pos); pos = "<0.1"; }
+            if (defaultElements.length > 0) { tl.to(defaultElements, { opacity: 1, y: 0, stagger: 0.1 }, pos); pos = "<0.1"; }
+            if (staggerItems.length > 0) { tl.to(staggerItems, { opacity: 1, y: 0, stagger: 0.1 }, pos); pos = "<0.1"; }
+            if (revealImages.length > 0) { tl.to(revealImages, { clipPath: 'inset(0% 0% 0% 0%)', stagger: 0.2, duration: 1.2, ease: 'power3.out' }, "<"); }
+            if (squiggle) { tl.to(squiggle, { strokeDashoffset: 0, duration: 1.5, ease: 'power2.inOut' }, "-=0.5"); }
         });
-         // console.log("Standard ScrollTrigger entrance animations set up.");
-     } catch (error) {
-         console.error("Error setting up standard ScrollTrigger entrance animations:", error);
-     }
+    } catch (error) {
+        console.error("Error setting up standard ScrollTrigger entrance animations:", error);
+    }
 
-    // --- Testimonial Slider Logic ---
-    try {
+    // --- Testimonial Slider Logic (FIXED & ENHANCED) ---
+     try {
         const sliderWrapper = document.getElementById('testimonial-wrapper');
         const prevButton = document.getElementById('prev-testimonial');
         const nextButton = document.getElementById('next-testimonial');
@@ -215,24 +212,41 @@ function initializeAnimations() {
         if (sliderWrapper && prevButton && nextButton && slides.length > 0) {
             let currentIndex = 0;
             const totalSlides = slides.length;
+
+            gsap.set(sliderWrapper, { willChange: 'transform' });
+
             function goToSlide(index) {
                 if (index < 0) { index = totalSlides - 1; }
                 else if (index >= totalSlides) { index = 0; }
-                gsap.to(sliderWrapper, { xPercent: -100 * index, duration: 0.5, ease: 'power3.inOut' });
+
+                gsap.to(sliderWrapper, { xPercent: -100 * index, duration: 0.6, ease: 'power2.inOut' });
                 currentIndex = index;
                 updateSlides(currentIndex);
             }
+
             const updateSlides = (newIndex) => {
                 slides.forEach((slide, i) => {
                     const isActive = i === newIndex;
                     slide.setAttribute('aria-hidden', !isActive);
                     slide.setAttribute('aria-label', `Slide ${i + 1} of ${totalSlides}`);
+                    slide.tabIndex = isActive ? 0 : -1;
                 });
             };
+
             updateSlides(currentIndex);
             prevButton.addEventListener('click', () => goToSlide(currentIndex - 1));
-            nextButton.addEventListener('click', () => goToSlide(currentIndex + 1));
-            // console.log(`Testimonial slider initialized with ${totalSlides} slides.`);
+            nextButton.addEventListener('click', () => goToSlide(currentIndex + 1)); // Corrected Button
+
+            // --- Basic Swipe Functionality ---
+            let touchstartX = 0;
+            let touchendX = 0;
+            const swipeThreshold = 50;
+            sliderWrapper.addEventListener('touchstart', (e) => { touchstartX = e.changedTouches[0].screenX; }, { passive: true });
+            sliderWrapper.addEventListener('touchend', (e) => { touchendX = e.changedTouches[0].screenX; handleSwipe(); }, { passive: true });
+            function handleSwipe() {
+                if (touchendX < touchstartX - swipeThreshold) { goToSlide(currentIndex + 1); }
+                if (touchendX > touchstartX + swipeThreshold) { goToSlide(currentIndex - 1); }
+            }
         } else {
             console.warn("Testimonial slider elements not found.");
         }
@@ -262,144 +276,136 @@ function initializeAnimations() {
                 const questionButton = item.querySelector('.faq-question');
                 const answer = item.querySelector('.faq-answer');
                 const icon = item.querySelector('.faq-icon');
-                const questionId = `faq-question-${index + 1}`;
-                const answerId = `faq-answer-${index + 1}`;
-                if (questionButton && !questionButton.id) questionButton.id = questionId;
-                if (answer && !answer.id) answer.id = answerId;
-                if (questionButton && answer) {
-                    questionButton.setAttribute('aria-controls', answerId);
-                    answer.setAttribute('aria-labelledby', questionId);
-                }
-                if (questionButton && answer) {
+                 if (questionButton && answer) {
+                    questionButton.setAttribute('id', `faq-question-${index + 1}`);
+                    questionButton.setAttribute('aria-expanded', 'false');
+                    questionButton.setAttribute('aria-controls', `faq-answer-${index + 1}`);
+                    answer.setAttribute('id', `faq-answer-${index + 1}`);
+
                     questionButton.addEventListener('click', () => {
                         const isActive = item.classList.contains('active');
                         closeAllFaqs(item);
                         if (!isActive) {
                             item.classList.add('active');
+                            gsap.set(answer, { height: 'auto', opacity: 1, paddingTop: '0.5rem', paddingBottom: '1rem' });
+                            gsap.from(answer, { height: 0, opacity: 0, paddingTop: 0, paddingBottom: 0, duration: 0.4, ease: 'power2.inOut' });
                             questionButton.setAttribute('aria-expanded', 'true');
-                            if (icon) icon.textContent = '−';
-                            gsap.to(answer, {
-                                maxHeight: answer.scrollHeight, opacity: 1,
-                                paddingTop: '0.5rem', paddingBottom: '1rem',
-                                duration: 0.5, ease: 'power1.inOut'
-                             });
+                            if (icon) icon.textContent = '×';
                         }
                     });
                 }
             });
-             // console.log(`Custom FAQ accordion initialized for ${faqItems.length} items.`);
         } else {
-            // console.log("No custom FAQ items found.");
+            console.warn("FAQ items not found.");
         }
     } catch (error) {
-        console.error("Error setting up custom FAQ accordion:", error);
+        console.error("Error setting up FAQ accordion:", error);
     }
-
-
-    // --- Animated Mobile Menu Logic (Using matchMedia) ---
-    ScrollTrigger.matchMedia({
-        // Setup for mobile breakpoint (below md: 768px)
-        "(max-width: 767px)": function() {
-            console.log("MATCHMEDIA: Setting up mobile menu animation."); // Log: Setup starts
-            const menuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            let menuTimeline;
-
-            // Log whether elements were found
-            console.log("MATCHMEDIA: Found menuButton?", !!menuButton);
-            console.log("MATCHMEDIA: Found mobileMenu?", !!mobileMenu);
-
-            if (menuButton && mobileMenu) {
-                gsap.set(mobileMenu, { height: 0, opacity: 0, visibility: 'hidden' });
-                menuTimeline = gsap.timeline({ paused: true, reversed: true });
-                menuTimeline.to(mobileMenu, {
-                    height: 'auto',
-                    opacity: 1,
-                    visibility: 'visible',
-                    duration: 0.4,
-                    ease: 'power2.out'
-                });
-
-                // Define the click handler function
-                const toggleMenu = () => {
-                    console.log("HANDLER: toggleMenu function executed!"); // Log: Handler runs
-                    console.log("HANDLER: Timeline reversed before toggle?", menuTimeline.reversed());
-                    menuTimeline.reversed(!menuTimeline.reversed());
-                    const isExpanded = !menuTimeline.reversed();
-                    menuButton.setAttribute('aria-expanded', isExpanded);
-                    console.log("HANDLER: Timeline reversed after toggle?", menuTimeline.reversed());
-                    console.log("HANDLER: aria-expanded set to", isExpanded);
-                };
-
-                // Add the event listener
-                menuButton.addEventListener('click', toggleMenu);
-                console.log("MATCHMEDIA: Event listener added to menuButton."); // Log: Listener added
-
-                // Return a cleanup function
-                return () => {
-                    console.log("MATCHMEDIA: Cleaning up mobile menu animation.");
-                    menuButton.removeEventListener('click', toggleMenu);
-                    if (menuTimeline) {
-                        menuTimeline.kill();
-                    }
-                    menuButton.setAttribute('aria-expanded', 'false');
-                };
-            } else {
-                 console.warn("MATCHMEDIA: Mobile menu button or panel not found for setup.");
-                 return () => {};
-            }
-        },
-
-        // Setup for larger screens (md breakpoint and up)
-        "(min-width: 768px)": function() {
-            console.log("MATCHMEDIA: On desktop breakpoint, mobile menu animation inactive.");
-             const mobileMenu = document.getElementById('mobile-menu');
-             const menuButton = document.getElementById('mobile-menu-button');
-             if (mobileMenu) {
-                 gsap.set(mobileMenu, { height: 0, opacity: 0, visibility: 'hidden' });
-             }
-             if (menuButton) {
-                 menuButton.setAttribute('aria-expanded', 'false');
-             }
-            return () => { }; // No specific cleanup needed for desktop state
-        }
-    }); // End of matchMedia
-
-    console.log("Uplift Concept Initialized.");
-} // End of initializeAnimations function
-
-// --- Preloader Logic ---
-function handlePreloader() {
-    const preloader = document.getElementById('preloader');
-    const preloaderLogo = document.getElementById('preloader-logo');
-    if (!preloader || !preloaderLogo) {
-        console.warn("Preloader elements not found. Skipping preloader.");
-        // Make sure animations run even if preloader fails
-        if (document.readyState === "loading") { // Loading hasn't finished yet
-            document.addEventListener("DOMContentLoaded", initializeAnimations);
-        } else { // `DOMContentLoaded` has already fired
-            initializeAnimations();
-        }
-        return;
-    }
-    gsap.to(preloaderLogo, {
-        scale: 1.1, duration: 0.6, repeat: -1, yoyo: true, ease: "power1.inOut"
-    });
-    window.addEventListener('load', () => {
-        console.log("Window loaded. Hiding preloader...");
-        gsap.timeline()
-            .to(preloaderLogo, {
-                opacity: 0, scale: 0.8, duration: 0.3, ease: "power1.in"
-            })
-            .to(preloader, {
-                opacity: 0, duration: 0.5, ease: "power1.inOut",
-                onComplete: () => {
-                    preloader.style.display = 'none';
-                    console.log("Preloader hidden. Initializing main animations...");
-                    initializeAnimations();
-                }
-            }, "-=0.1");
-    });
 }
 
-handlePreloader();
+// Mobile Menu Function
+function initializeMobileMenu() {
+    console.log("Initializing mobile menu functionality...");
+
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const closeIcon = document.getElementById('close-icon');
+
+    if (!mobileMenuButton || !mobileMenu) {
+        console.warn("Mobile menu elements not found");
+        return;
+    }
+
+    mobileMenuButton.addEventListener('click', function() {
+        const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+        mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+        mobileMenu.classList.toggle('active');
+
+        if (menuIcon && closeIcon) {
+            menuIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+        }
+    });
+
+    mobileMenu.querySelectorAll('a.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+             if (mobileMenu.classList.contains('active')) {
+                mobileMenu.classList.remove('active');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+                if (menuIcon && closeIcon) {
+                    menuIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                }
+             }
+        });
+    });
+
+    document.addEventListener('click', function(event) {
+        if (mobileMenu.classList.contains('active') &&
+            !mobileMenuButton.contains(event.target) &&
+            !mobileMenu.contains(event.target)) {
+
+            mobileMenu.classList.remove('active');
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+
+            if (menuIcon && closeIcon) {
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            }
+        }
+    });
+
+    console.log("Mobile menu initialization complete");
+}
+
+// Preloader Animation & Removal
+window.onload = function() {
+    const preloader = document.getElementById('preloader');
+    const preloaderLogo = document.getElementById('preloader-logo');
+
+    if (!preloader || !preloaderLogo) {
+        console.error("Preloader elements not found! Initializing directly.");
+        initializeAnimations();
+        initializeMobileMenu();
+        return;
+    }
+
+    if (typeof gsap !== 'undefined') {
+        gsap.to(preloaderLogo, {
+            scale: 1.2, duration: 0.8, repeat: 1, yoyo: true, ease: "power1.inOut",
+            onComplete: () => {
+                 gsap.to(preloader, {
+                    opacity: 0, duration: 0.5,
+                    onComplete: () => {
+                        preloader.style.display = 'none';
+                        initializeAnimations();
+                        initializeMobileMenu();
+                    }
+                });
+            }
+        });
+    } else {
+        console.warn("GSAP not found for preloader, using fallback...");
+        setTimeout(() => {
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+                initializeAnimations();
+                initializeMobileMenu();
+            }, 500);
+        }, 1000);
+    }
+};
+
+// Handle window resize for responsive animations
+let resizeTimeout;
+window.addEventListener('resize', function() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.refresh();
+             console.log("ScrollTrigger refreshed.");
+        }
+    }, 250);
+});
