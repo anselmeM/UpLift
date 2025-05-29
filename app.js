@@ -1,4 +1,4 @@
-// app.js - Updated with mobile menu improvements and testimonial slider fixes
+// app.js - Updated with mobile menu improvements and testimonial slider enhancements
 
 function initializeAnimations() {
     console.log("Initializing animations AFTER preloader...");
@@ -36,6 +36,7 @@ function initializeAnimations() {
         if (heroButton) {
             heroTl.to(heroButton, { opacity: 1, y: 0 }, "-=0.7");
         }
+        // console.log("Hero animation timeline created.");
     } catch (error) {
         console.error("Error creating hero timeline:", error);
     }
@@ -43,6 +44,7 @@ function initializeAnimations() {
      // --- Header Fade-in ---
      try {
          gsap.to('header', { opacity: 1, duration: 1, delay: 0.3 });
+         // console.log("Header animation created.");
      } catch (error) {
          console.error("Error creating header animation:", error);
      }
@@ -62,6 +64,7 @@ function initializeAnimations() {
                 }
             });
         });
+        // console.log(`Parallax effect applied to ${parallaxSections.length} sections.`);
     } catch (error) {
         console.error("Error applying parallax effect:", error);
     }
@@ -81,6 +84,7 @@ function initializeAnimations() {
                 }
             });
         });
+         // console.log(`Scroll-linked horizontal movement applied to ${scrubXElements.length} elements (excluding conflicting items).`);
     } catch (error) {
         console.error("Error applying scroll-linked horizontal movement:", error);
     }
@@ -93,7 +97,7 @@ function initializeAnimations() {
 
         if (scrollContainer && scrollTrack) {
             const isMobile = window.innerWidth < 768;
-
+            
             if (!isMobile) {
                 let scrollTween = gsap.to(scrollTrack, {
                     x: () => -(scrollTrack.scrollWidth - scrollContainer.offsetWidth) + "px",
@@ -109,7 +113,7 @@ function initializeAnimations() {
                 });
 
                 const slides = gsap.utils.toArray('.slide');
-                slides.forEach((slide) => {
+                slides.forEach((slide, index) => {
                     const heading = slide.querySelector('.slide__heading');
                     const description = slide.querySelector('.slide__description');
                     const imgCont = slide.querySelector('.slide__img-cont');
@@ -155,33 +159,47 @@ function initializeAnimations() {
             } else {
                 scrollTrack.style.width = '100%';
                 scrollTrack.style.flexDirection = 'column';
-
+                
                 const slides = gsap.utils.toArray('.slide');
                 slides.forEach(slide => {
                     slide.style.width = '100%';
                     slide.style.height = 'auto';
                     slide.style.minHeight = '85vh';
-
+                    
                     const heading = slide.querySelector('.slide__heading');
                     const description = slide.querySelector('.slide__description');
                     const imgCont = slide.querySelector('.slide__img-cont');
-
+                    
                     if (heading) {
                         gsap.from(heading, {
                             opacity: 0, y: 30, duration: 0.8,
-                            scrollTrigger: { trigger: heading, start: "top 85%", toggleActions: "play none none none" }
+                            scrollTrigger: {
+                                trigger: heading,
+                                start: "top 85%",
+                                toggleActions: "play none none none"
+                            }
                         });
                     }
+                    
                     if (description) {
                         gsap.from(description, {
                             opacity: 0, y: 30, duration: 0.8, delay: 0.1,
-                            scrollTrigger: { trigger: description, start: "top 85%", toggleActions: "play none none none" }
+                            scrollTrigger: {
+                                trigger: description,
+                                start: "top 85%",
+                                toggleActions: "play none none none"
+                            }
                         });
                     }
+                    
                     if (imgCont) {
                         gsap.from(imgCont, {
                             opacity: 0, y: 30, duration: 0.8, delay: 0.2,
-                            scrollTrigger: { trigger: imgCont, start: "top 85%", toggleActions: "play none none none" }
+                            scrollTrigger: {
+                                trigger: imgCont,
+                                start: "top 85%",
+                                toggleActions: "play none none none"
+                            }
                         });
                     }
                 });
@@ -192,15 +210,13 @@ function initializeAnimations() {
     } catch (error) {
         console.error("Error setting up horizontal scroll or inner slide animations:", error);
     }
+    // --- End Horizontal Scroll Logic ---
 
-    // --- Standard Scroll-Triggered Entrance Animations ---
+
+    // --- Standard Scroll-Triggered Entrance Animations (Sections NOT in horizontal scroll) ---
     try {
         const sections = gsap.utils.toArray('.animate-section:not(.horizontal-scroll-section)');
-        sections.forEach((section) => {
-            const tl = gsap.timeline({
-                scrollTrigger: { trigger: section, start: 'top 85%', toggleActions: 'play none none none' },
-                defaults: { ease: defaultEase, duration: defaultDuration }
-            });
+        sections.forEach((section, index) => {
             const leftElements = section.querySelectorAll('.animate-left');
             const rightElements = section.querySelectorAll('.animate-right');
             const staggerItems = section.querySelectorAll('.animate-stagger-item');
@@ -208,20 +224,33 @@ function initializeAnimations() {
             const defaultElements = section.querySelectorAll('.animate-element:not(.animate-left):not(.animate-right):not(.animate-stagger-item):not(.animate-fade)');
             const revealImages = section.querySelectorAll('.reveal-image');
             const squiggle = section.querySelector('.squiggle #squiggle-path');
-            let pos = "<";
-            if (leftElements.length > 0) { tl.to(leftElements, { opacity: 1, x: 0, stagger: 0.15 }, pos); pos = "<0.1"; }
-            if (rightElements.length > 0) { tl.to(rightElements, { opacity: 1, x: 0, stagger: 0.15 }, pos); pos = "<0.1"; }
-            if (fadeElements.length > 0) { tl.to(fadeElements, { opacity: 1, stagger: 0.15 }, pos); pos = "<0.1"; }
-            if (defaultElements.length > 0) { tl.to(defaultElements, { opacity: 1, y: 0, stagger: 0.1 }, pos); pos = "<0.1"; }
-            if (staggerItems.length > 0) { tl.to(staggerItems, { opacity: 1, y: 0, stagger: 0.1 }, pos); pos = "<0.1"; }
-            if (revealImages.length > 0) { tl.to(revealImages, { clipPath: 'inset(0% 0% 0% 0%)', stagger: 0.2, duration: 1.2, ease: 'power3.out' }, "<"); }
-            if (squiggle) { tl.to(squiggle, { strokeDashoffset: 0, duration: 1.5, ease: 'power2.inOut' }, "-=0.5"); }
-        });
-    } catch (error) {
-        console.error("Error setting up standard ScrollTrigger entrance animations:", error);
-    }
 
-    // --- Testimonial Slider Logic (FIXED & ENHANCED) ---
+            if (leftElements.length || rightElements.length || staggerItems.length || defaultElements.length || fadeElements.length || revealImages.length || squiggle) {
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 85%',
+                        toggleActions: 'play none none none'
+                    },
+                    defaults: { ease: defaultEase, duration: defaultDuration }
+                });
+
+                let position = "<";
+                if (leftElements.length > 0) { tl.to(leftElements, { opacity: 1, x: 0, stagger: 0.15 }, position); position = "<0.1"; }
+                if (rightElements.length > 0) { tl.to(rightElements, { opacity: 1, x: 0, stagger: 0.15 }, position); position = "<0.1"; }
+                if (fadeElements.length > 0) { tl.to(fadeElements, { opacity: 1, stagger: 0.15 }, position); position = "<0.1"; }
+                if (defaultElements.length > 0) { tl.to(defaultElements, { opacity: 1, y: 0, stagger: 0.1 }, position); position = "<0.1"; }
+                if (staggerItems.length > 0) { tl.to(staggerItems, { opacity: 1, y: 0, stagger: 0.1 }, position); position = "<0.1"; }
+                if (revealImages.length > 0) { tl.to(revealImages, { clipPath: 'inset(0% 0% 0% 0%)', stagger: 0.2, duration: 1.2, ease: 'power3.out' }, "<"); }
+                if (squiggle) { tl.to(squiggle, { strokeDashoffset: 0, duration: 1.5, ease: 'power2.inOut' }, "-=0.5"); }
+            }
+        });
+         // console.log("Standard ScrollTrigger entrance animations set up.");
+     } catch (error) {
+         console.error("Error setting up standard ScrollTrigger entrance animations:", error);
+     }
+
+    // --- Testimonial Slider Logic ---
     try {
         const sliderWrapper = document.getElementById('testimonial-wrapper');
         const prevButton = document.getElementById('prev-testimonial');
@@ -232,16 +261,18 @@ function initializeAnimations() {
             let currentIndex = 0;
             const totalSlides = slides.length;
 
-            gsap.set(sliderWrapper, { willChange: 'transform' }); // Hint for smooth animation
+            // Set will-change for potentially smoother animations, especially on mobile.
+            // GSAP often handles this well, but being explicit can sometimes help.
+            gsap.set(sliderWrapper, { willChange: 'transform' });
 
-            function goToSlide(index) {
+            function goToSlide(index, fromSwipe = false) {
                 if (index < 0) { index = totalSlides - 1; }
                 else if (index >= totalSlides) { index = 0; }
 
                 gsap.to(sliderWrapper, {
                     xPercent: -100 * index,
-                    duration: 0.6,
-                    ease: 'power2.inOut'
+                    duration: 0.6, // Slightly adjusted duration for a good feel
+                    ease: 'power2.inOut' // A common, smooth ease
                 });
                 currentIndex = index;
                 updateSlides(currentIndex);
@@ -252,46 +283,50 @@ function initializeAnimations() {
                     const isActive = i === newIndex;
                     slide.setAttribute('aria-hidden', !isActive);
                     slide.setAttribute('aria-label', `Slide ${i + 1} of ${totalSlides}`);
+                    // Make only the active slide focusable for accessibility
                     slide.tabIndex = isActive ? 0 : -1;
                 });
             };
 
-            updateSlides(currentIndex);
+            updateSlides(currentIndex); // Initialize ARIA states and tabIndex
 
             prevButton.addEventListener('click', () => goToSlide(currentIndex - 1));
-            // *** THE FIX IS HERE ***
-            nextButton.addEventListener('click', () => goToSlide(currentIndex + 1));
+            nextButton.addEventListener('click', () => goToSlide(currentIndex + 1)); // *** BUG FIX: Was currentIndex - 1 ***
 
-            // --- Basic Swipe Functionality ---
+            // --- Basic Swipe Functionality for Mobile ---
             let touchstartX = 0;
             let touchendX = 0;
-            const swipeThreshold = 50;
+            const swipeThreshold = 50; // Minimum horizontal distance for a swipe
 
-            sliderWrapper.addEventListener('touchstart', (e) => {
-                touchstartX = e.changedTouches[0].screenX;
-            }, { passive: true });
+            sliderWrapper.addEventListener('touchstart', (event) => {
+                touchstartX = event.changedTouches[0].screenX;
+            }, { passive: true }); // Use passive listener for better scroll performance
 
-            sliderWrapper.addEventListener('touchend', (e) => {
-                touchendX = e.changedTouches[0].screenX;
+            sliderWrapper.addEventListener('touchend', (event) => {
+                touchendX = event.changedTouches[0].screenX;
                 handleSwipe();
             }, { passive: true });
 
             function handleSwipe() {
-                if (touchendX < touchstartX - swipeThreshold) {
-                    goToSlide(currentIndex + 1);
-                }
-                if (touchendX > touchstartX + swipeThreshold) {
-                    goToSlide(currentIndex - 1);
+                const deltaX = touchendX - touchstartX;
+                if (Math.abs(deltaX) > swipeThreshold) { // Ensure it's a significant swipe
+                    if (deltaX < 0) { // Swiped left (next slide)
+                        goToSlide(currentIndex + 1, true);
+                    } else { // Swiped right (previous slide)
+                        goToSlide(currentIndex - 1, true);
+                    }
                 }
             }
-            console.log(`Testimonial slider initialized with ${totalSlides} slides, swipe enabled.`);
+            // --- End Swipe Functionality ---
 
+            console.log(`Testimonial slider initialized with ${totalSlides} slides, swipe enabled.`);
         } else {
-            console.warn("Testimonial slider elements not found.");
+            console.warn("Testimonial slider elements not found or not enough slides for full functionality.");
         }
     } catch(error) {
         console.error("Error setting up testimonial slider:", error);
     }
+
 
     // --- Functional FAQ Accordion Logic ---
     try {
@@ -314,25 +349,33 @@ function initializeAnimations() {
                 const questionButton = item.querySelector('.faq-question');
                 const answer = item.querySelector('.faq-answer');
                 const icon = item.querySelector('.faq-icon');
-                if (questionButton && answer) {
-                    questionButton.setAttribute('id', `faq-question-${index + 1}`);
+                const questionId = `faq-question-${index + 1}`;
+                const answerId = `faq-answer-${index + 1}`;
+                
+                if (questionButton) {
+                    questionButton.setAttribute('id', questionId);
                     questionButton.setAttribute('aria-expanded', 'false');
-                    questionButton.setAttribute('aria-controls', `faq-answer-${index + 1}`);
-                    answer.setAttribute('id', `faq-answer-${index + 1}`);
-
+                    questionButton.setAttribute('aria-controls', answerId);
+                }
+                if (answer) answer.setAttribute('id', answerId);
+                
+                if (questionButton) {
                     questionButton.addEventListener('click', () => {
                         const isActive = item.classList.contains('active');
-                        closeAllFaqs(item);
+                        closeAllFaqs(item); // Close others before opening current
                         if (!isActive) {
                             item.classList.add('active');
-                            gsap.set(answer, { height: 'auto', opacity: 1, paddingTop: '0.5rem', paddingBottom: '1rem' });
+                            // GSAP to animate open
+                            gsap.set(answer, { height: 'auto', opacity: 1, paddingTop: '0.5rem', paddingBottom: '1rem' }); // Set to auto first to get natural height
                             gsap.from(answer, { height: 0, opacity: 0, paddingTop: 0, paddingBottom: 0, duration: 0.4, ease: 'power2.inOut' });
                             questionButton.setAttribute('aria-expanded', 'true');
-                            if (icon) icon.textContent = '×';
+                            if (icon) icon.textContent = '×'; // Using '×' (multiplication sign) for close
                         }
+                        // If it was active, closeAllFaqs would have handled it (or it remains closed if it was the only one)
                     });
                 }
             });
+            // console.log(`FAQ accordion initialized with ${faqItems.length} items.`);
         } else {
             console.warn("FAQ items not found.");
         }
@@ -347,10 +390,9 @@ function initializeMobileMenu() {
     
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
-    // Assuming the SVG is inside the button and icons are handled by class 'hidden'
-    // If you add IDs #menu-icon and #close-icon, they will be used.
-    const menuIcon = document.getElementById('menu-icon'); // Check if exists
-    const closeIcon = document.getElementById('close-icon'); // Check if exists
+    // Assuming you might add specific icons for open/close later if not using the SVG directly
+    // const menuIcon = document.getElementById('menu-icon'); 
+    // const closeIcon = document.getElementById('close-icon');
     
     if (!mobileMenuButton || !mobileMenu) {
         console.warn("Mobile menu elements not found");
@@ -358,51 +400,47 @@ function initializeMobileMenu() {
     }
     
     mobileMenuButton.addEventListener('click', function() {
+        console.log("Mobile menu button clicked");
+        
         const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
         mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
-        mobileMenu.classList.toggle('active');
         
-        // If specific icons exist, toggle them
-        if (menuIcon && closeIcon) {
-            menuIcon.classList.toggle('hidden');
-            closeIcon.classList.toggle('hidden');
-        } else {
-            // Fallback or handle SVG change if needed
-            const svgIcon = mobileMenuButton.querySelector('svg');
-            // You might need more complex logic here if you want to change SVG paths
-            console.log("Toggling menu, icon change might need manual SVG handling or CSS classes.");
-        }
+        mobileMenu.classList.toggle('active'); // This class should control visibility/height in CSS
+        
+        // Example for icon toggling if you have separate icon elements:
+        // if (menuIcon && closeIcon) {
+        //     menuIcon.classList.toggle('hidden');
+        //     closeIcon.classList.toggle('hidden');
+        // }
     });
     
-    // Close menu when clicking a link (Good for SPA-like feel or anchor links)
-    mobileMenu.querySelectorAll('a.nav-link').forEach(link => {
+    // Close menu when clicking a link inside the mobile menu (optional)
+    const mobileMenuLinks = mobileMenu.querySelectorAll('a.nav-link');
+    mobileMenuLinks.forEach(link => {
         link.addEventListener('click', () => {
-             if (mobileMenu.classList.contains('active')) {
+            if (mobileMenu.classList.contains('active')) {
                 mobileMenu.classList.remove('active');
                 mobileMenuButton.setAttribute('aria-expanded', 'false');
-                if (menuIcon && closeIcon) {
-                    menuIcon.classList.remove('hidden');
-                    closeIcon.classList.add('hidden');
-                }
-             }
+                // if (menuIcon && closeIcon) { // Reset icons
+                //     menuIcon.classList.remove('hidden');
+                //     closeIcon.classList.add('hidden');
+                // }
+            }
         });
     });
 
-    // Close menu when clicking outside (Consider UX implications)
+    // Close menu when clicking outside - BE CAREFUL with this on mobile, can be tricky
+    // For now, let's rely on the toggle button and link clicks.
+    // If you re-enable, ensure it doesn't interfere with other clickable elements.
+    /*
     document.addEventListener('click', function(event) {
-        if (mobileMenu.classList.contains('active') && 
-            !mobileMenuButton.contains(event.target) && 
-            !mobileMenu.contains(event.target)) {
-                
+        if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target) && mobileMenu.classList.contains('active')) {
             mobileMenu.classList.remove('active');
             mobileMenuButton.setAttribute('aria-expanded', 'false');
-            
-            if (menuIcon && closeIcon) {
-                menuIcon.classList.remove('hidden');
-                closeIcon.classList.add('hidden');
-            }
+            // Reset icons if used
         }
     });
+    */
     
     console.log("Mobile menu initialization complete");
 }
@@ -413,7 +451,8 @@ window.onload = function() {
     const preloaderLogo = document.getElementById('preloader-logo');
     
     if (!preloader || !preloaderLogo) {
-        console.error("Preloader elements not found! Initializing directly.");
+        console.error("Preloader elements not found!");
+        // Fallback: still try to initialize animations and menu if preloader is missing
         initializeAnimations();
         initializeMobileMenu();
         return;
@@ -423,15 +462,15 @@ window.onload = function() {
         gsap.to(preloaderLogo, {
             scale: 1.2,
             duration: 0.8,
-            repeat: 1,
+            repeat: 1, // Pulse once (down and up)
             yoyo: true,
             ease: "power1.inOut",
             onComplete: () => {
-                 gsap.to(preloader, { 
+                gsap.to(preloader, { // Fade out preloader
                     opacity: 0,
                     duration: 0.5,
                     onComplete: () => {
-                        preloader.style.display = 'none'; 
+                        preloader.style.display = 'none'; // Hide completely
                         initializeAnimations();
                         initializeMobileMenu();
                     }
@@ -439,26 +478,30 @@ window.onload = function() {
             }
         });
     } else {
-        console.warn("GSAP not found for preloader, using fallback...");
+        console.warn("GSAP not found for preloader animation, using fallback timeout...");
         setTimeout(() => {
             preloader.style.opacity = '0';
             setTimeout(() => {
                 preloader.style.display = 'none';
                 initializeAnimations();
                 initializeMobileMenu();
-            }, 500);
-        }, 1000);
+            }, 500); // Match CSS transition if any, or just a delay
+        }, 1000); // Time for users to see the preloader
     }
 };
 
 // Handle window resize for responsive animations
 let resizeTimeout;
 window.addEventListener('resize', function() {
+    // Debounce resize event to avoid excessive ScrollTrigger refreshes
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
         if (typeof ScrollTrigger !== 'undefined') {
             ScrollTrigger.refresh();
-             console.log("ScrollTrigger refreshed.");
+            console.log("ScrollTrigger refreshed on resize.");
         }
-    }, 250); // Debounce refresh
+        // Potentially re-evaluate mobile/desktop specific logic if needed here
+        // For example, if the horizontal scroll behavior needs to be re-initialized
+        // based on the new window size. Currently, it's checked once at init.
+    }, 250);
 });
