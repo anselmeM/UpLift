@@ -1,4 +1,4 @@
-// app.js - Updated with mobile menu improvements
+// app.js - Added console logs for debugging mobile menu listener
 
 function initializeAnimations() {
     console.log("Initializing animations AFTER preloader...");
@@ -96,118 +96,67 @@ function initializeAnimations() {
         const scrollTrack = document.getElementById('horizontal-scroll-track');
 
         if (scrollContainer && scrollTrack) {
-            // Check if mobile view
-            const isMobile = window.innerWidth < 768;
-            
-            if (!isMobile) {
-                // Only apply horizontal scroll on desktop/tablet
-                let scrollTween = gsap.to(scrollTrack, {
-                    x: () => -(scrollTrack.scrollWidth - scrollContainer.offsetWidth) + "px",
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: scrollContainer,
-                        pin: true,
-                        scrub: 0.5,
-                        start: "top top",
-                        end: () => "+=" + (scrollTrack.scrollWidth - scrollContainer.offsetWidth),
-                        invalidateOnRefresh: true
-                    }
-                });
+            // console.log("Setting up horizontal scroll...");
+            let scrollTween = gsap.to(scrollTrack, {
+                x: () => -(scrollTrack.scrollWidth - scrollContainer.offsetWidth) + "px",
+                ease: "none",
+                scrollTrigger: {
+                    trigger: scrollContainer,
+                    pin: true,
+                    scrub: 0.5,
+                    start: "top top",
+                    end: () => "+=" + (scrollTrack.scrollWidth - scrollContainer.offsetWidth),
+                    invalidateOnRefresh: true
+                }
+            });
+             // console.log("Horizontal scroll tween created.");
 
-                const slides = gsap.utils.toArray('.slide');
-                slides.forEach((slide, index) => {
-                    const heading = slide.querySelector('.slide__heading');
-                    const description = slide.querySelector('.slide__description');
-                    const imgCont = slide.querySelector('.slide__img-cont');
+            const slides = gsap.utils.toArray('.slide');
+            slides.forEach((slide, index) => {
+                const heading = slide.querySelector('.slide__heading');
+                const description = slide.querySelector('.slide__description');
+                const imgCont = slide.querySelector('.slide__img-cont');
 
-                    if (heading) {
-                        gsap.from(heading, {
-                            opacity: 0, y: 50, duration: 0.8, ease: 'power2.out',
-                            scrollTrigger: {
-                                trigger: slide, containerAnimation: scrollTween,
-                                start: "left center+=100", toggleActions: "play none none reverse"
-                            }
-                        });
-                    }
-                    if (description) {
-                        gsap.from(description, {
-                            opacity: 0, y: 40, duration: 0.8, ease: 'power2.out', delay: 0.1,
-                            scrollTrigger: {
-                                trigger: slide, containerAnimation: scrollTween,
-                                start: "left center+=50", toggleActions: "play none none reverse"
-                            }
-                        });
-                    }
-                    if (imgCont) {
-                        gsap.from(imgCont, {
-                            opacity: 0, scale: 0.9, duration: 1.0, ease: 'power3.out', delay: 0.2,
-                            scrollTrigger: {
-                                trigger: slide, containerAnimation: scrollTween,
-                                start: "left center", toggleActions: "play none none reverse"
-                            }
-                        });
-                        const image = imgCont.querySelector('.slide__img');
-                        if (image) {
-                            gsap.to(image, {
-                                xPercent: -8, ease: "none",
-                                scrollTrigger: {
-                                    trigger: slide, containerAnimation: scrollTween,
-                                    scrub: true, start: "left right", end: "right left"
-                                }
-                            });
+                if (heading) {
+                    gsap.from(heading, {
+                        opacity: 0, y: 50, duration: 0.8, ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: slide, containerAnimation: scrollTween,
+                            start: "left center+=100", toggleActions: "play none none reverse"
                         }
-                    }
-                });
-            } else {
-                // Mobile optimization - convert to vertical scroll
-                scrollTrack.style.width = '100%';
-                scrollTrack.style.flexDirection = 'column';
-                
-                const slides = gsap.utils.toArray('.slide');
-                slides.forEach(slide => {
-                    slide.style.width = '100%';
-                    slide.style.height = 'auto';
-                    slide.style.minHeight = '85vh';
-                    
-                    const heading = slide.querySelector('.slide__heading');
-                    const description = slide.querySelector('.slide__description');
-                    const imgCont = slide.querySelector('.slide__img-cont');
-                    
-                    // Apply standard entrance animations
-                    if (heading) {
-                        gsap.from(heading, {
-                            opacity: 0, y: 30, duration: 0.8,
-                            scrollTrigger: {
-                                trigger: heading,
-                                start: "top 85%",
-                                toggleActions: "play none none none"
-                            }
-                        });
-                    }
-                    
-                    if (description) {
-                        gsap.from(description, {
-                            opacity: 0, y: 30, duration: 0.8, delay: 0.1,
-                            scrollTrigger: {
-                                trigger: description,
-                                start: "top 85%",
-                                toggleActions: "play none none none"
-                            }
-                        });
-                    }
-                    
-                    if (imgCont) {
-                        gsap.from(imgCont, {
-                            opacity: 0, y: 30, duration: 0.8, delay: 0.2,
-                            scrollTrigger: {
-                                trigger: imgCont,
-                                start: "top 85%",
-                                toggleActions: "play none none none"
-                            }
-                        });
-                    }
-                });
-            }
+                    });
+                }
+                 if (description) {
+                    gsap.from(description, {
+                        opacity: 0, y: 40, duration: 0.8, ease: 'power2.out', delay: 0.1,
+                        scrollTrigger: {
+                            trigger: slide, containerAnimation: scrollTween,
+                            start: "left center+=50", toggleActions: "play none none reverse"
+                        }
+                    });
+                }
+                 if (imgCont) {
+                     gsap.from(imgCont, {
+                         opacity: 0, scale: 0.9, duration: 1.0, ease: 'power3.out', delay: 0.2,
+                         scrollTrigger: {
+                             trigger: slide, containerAnimation: scrollTween,
+                             start: "left center", toggleActions: "play none none reverse"
+                         }
+                     });
+                     const image = imgCont.querySelector('.slide__img');
+                     if (image) {
+                         gsap.to(image, {
+                             xPercent: -8, ease: "none",
+                             scrollTrigger: {
+                                 trigger: slide, containerAnimation: scrollTween,
+                                 scrub: true, start: "left right", end: "right left"
+                             }
+                         });
+                     }
+                 }
+            });
+             // console.log("Animations within horizontal slides set up for heading, description, and image.");
+
         } else {
             console.warn("Horizontal scroll container or track not found.");
         }
@@ -315,136 +264,142 @@ function initializeAnimations() {
                 const icon = item.querySelector('.faq-icon');
                 const questionId = `faq-question-${index + 1}`;
                 const answerId = `faq-answer-${index + 1}`;
-                
-                // Initialize attributes
-                if (questionButton) {
-                    questionButton.setAttribute('id', questionId);
-                    questionButton.setAttribute('aria-expanded', 'false');
+                if (questionButton && !questionButton.id) questionButton.id = questionId;
+                if (answer && !answer.id) answer.id = answerId;
+                if (questionButton && answer) {
                     questionButton.setAttribute('aria-controls', answerId);
+                    answer.setAttribute('aria-labelledby', questionId);
                 }
-                if (answer) answer.setAttribute('id', answerId);
-                
-                // Toggle logic
-                if (questionButton) {
+                if (questionButton && answer) {
                     questionButton.addEventListener('click', () => {
                         const isActive = item.classList.contains('active');
                         closeAllFaqs(item);
                         if (!isActive) {
                             item.classList.add('active');
-                            gsap.set(answer, { height: 'auto' });
-                            gsap.from(answer, { height: 0 });
-                            gsap.to(answer, { maxHeight: 1000, opacity: 1, paddingTop: '0.5rem', paddingBottom: '1rem', duration: 0.4, ease: 'power2.inOut' });
                             questionButton.setAttribute('aria-expanded', 'true');
-                            if (icon) icon.textContent = '×';
+                            if (icon) icon.textContent = '−';
+                            gsap.to(answer, {
+                                maxHeight: answer.scrollHeight, opacity: 1,
+                                paddingTop: '0.5rem', paddingBottom: '1rem',
+                                duration: 0.5, ease: 'power1.inOut'
+                             });
                         }
                     });
                 }
             });
-            // console.log(`FAQ accordion initialized with ${faqItems.length} items.`);
+             // console.log(`Custom FAQ accordion initialized for ${faqItems.length} items.`);
         } else {
-            console.warn("FAQ items not found.");
+            // console.log("No custom FAQ items found.");
         }
     } catch (error) {
-        console.error("Error setting up FAQ accordion:", error);
+        console.error("Error setting up custom FAQ accordion:", error);
     }
-}
 
-// Mobile Menu Function
-function initializeMobileMenu() {
-    console.log("Initializing mobile menu functionality...");
-    
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const menuIcon = document.getElementById('menu-icon');
-    const closeIcon = document.getElementById('close-icon');
-    
-    if (!mobileMenuButton || !mobileMenu) {
-        console.warn("Mobile menu elements not found");
-        return;
-    }
-    
-    mobileMenuButton.addEventListener('click', function() {
-        console.log("Mobile menu button clicked");
-        
-        // Toggle aria-expanded attribute
-        const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
-        mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
-        
-        // Toggle menu visibility
-        mobileMenu.classList.toggle('active');
-        
-        // Toggle icons if they exist
-        if (menuIcon && closeIcon) {
-            menuIcon.classList.toggle('hidden');
-            closeIcon.classList.toggle('hidden');
-        }
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(event) {
-        if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target) && mobileMenu.classList.contains('active')) {
-            mobileMenu.classList.remove('active');
-            mobileMenuButton.setAttribute('aria-expanded', 'false');
-            
-            if (menuIcon && closeIcon) {
-                menuIcon.classList.remove('hidden');
-                closeIcon.classList.add('hidden');
+
+    // --- Animated Mobile Menu Logic (Using matchMedia) ---
+    ScrollTrigger.matchMedia({
+        // Setup for mobile breakpoint (below md: 768px)
+        "(max-width: 767px)": function() {
+            console.log("MATCHMEDIA: Setting up mobile menu animation."); // Log: Setup starts
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            let menuTimeline;
+
+            // Log whether elements were found
+            console.log("MATCHMEDIA: Found menuButton?", !!menuButton);
+            console.log("MATCHMEDIA: Found mobileMenu?", !!mobileMenu);
+
+            if (menuButton && mobileMenu) {
+                gsap.set(mobileMenu, { height: 0, opacity: 0, visibility: 'hidden' });
+                menuTimeline = gsap.timeline({ paused: true, reversed: true });
+                menuTimeline.to(mobileMenu, {
+                    height: 'auto',
+                    opacity: 1,
+                    visibility: 'visible',
+                    duration: 0.4,
+                    ease: 'power2.out'
+                });
+
+                // Define the click handler function
+                const toggleMenu = () => {
+                    console.log("HANDLER: toggleMenu function executed!"); // Log: Handler runs
+                    console.log("HANDLER: Timeline reversed before toggle?", menuTimeline.reversed());
+                    menuTimeline.reversed(!menuTimeline.reversed());
+                    const isExpanded = !menuTimeline.reversed();
+                    menuButton.setAttribute('aria-expanded', isExpanded);
+                    console.log("HANDLER: Timeline reversed after toggle?", menuTimeline.reversed());
+                    console.log("HANDLER: aria-expanded set to", isExpanded);
+                };
+
+                // Add the event listener
+                menuButton.addEventListener('click', toggleMenu);
+                console.log("MATCHMEDIA: Event listener added to menuButton."); // Log: Listener added
+
+                // Return a cleanup function
+                return () => {
+                    console.log("MATCHMEDIA: Cleaning up mobile menu animation.");
+                    menuButton.removeEventListener('click', toggleMenu);
+                    if (menuTimeline) {
+                        menuTimeline.kill();
+                    }
+                    menuButton.setAttribute('aria-expanded', 'false');
+                };
+            } else {
+                 console.warn("MATCHMEDIA: Mobile menu button or panel not found for setup.");
+                 return () => {};
             }
-        }
-    });
-    
-    console.log("Mobile menu initialization complete");
-}
+        },
 
-// Preloader Animation & Removal
-window.onload = function() {
-    // Get the preloader element
+        // Setup for larger screens (md breakpoint and up)
+        "(min-width: 768px)": function() {
+            console.log("MATCHMEDIA: On desktop breakpoint, mobile menu animation inactive.");
+             const mobileMenu = document.getElementById('mobile-menu');
+             const menuButton = document.getElementById('mobile-menu-button');
+             if (mobileMenu) {
+                 gsap.set(mobileMenu, { height: 0, opacity: 0, visibility: 'hidden' });
+             }
+             if (menuButton) {
+                 menuButton.setAttribute('aria-expanded', 'false');
+             }
+            return () => { }; // No specific cleanup needed for desktop state
+        }
+    }); // End of matchMedia
+
+    console.log("Uplift Concept Initialized.");
+} // End of initializeAnimations function
+
+// --- Preloader Logic ---
+function handlePreloader() {
     const preloader = document.getElementById('preloader');
     const preloaderLogo = document.getElementById('preloader-logo');
-    
     if (!preloader || !preloaderLogo) {
-        console.error("Preloader elements not found!");
+        console.warn("Preloader elements not found. Skipping preloader.");
+        // Make sure animations run even if preloader fails
+        if (document.readyState === "loading") { // Loading hasn't finished yet
+            document.addEventListener("DOMContentLoaded", initializeAnimations);
+        } else { // `DOMContentLoaded` has already fired
+            initializeAnimations();
+        }
         return;
     }
-    
-    // Create preloader pulse animation
-    if (typeof gsap !== 'undefined') {
-        gsap.to(preloaderLogo, {
-            scale: 1.2,
-            duration: 0.8,
-            repeat: 1,
-            yoyo: true,
-            ease: "power1.inOut",
-            onComplete: () => {
-                // After pulse animation, hide preloader
-                preloader.classList.add('hidden');
-                
-                // Wait for preloader to fade out before initializing other animations
-                setTimeout(() => {
+    gsap.to(preloaderLogo, {
+        scale: 1.1, duration: 0.6, repeat: -1, yoyo: true, ease: "power1.inOut"
+    });
+    window.addEventListener('load', () => {
+        console.log("Window loaded. Hiding preloader...");
+        gsap.timeline()
+            .to(preloaderLogo, {
+                opacity: 0, scale: 0.8, duration: 0.3, ease: "power1.in"
+            })
+            .to(preloader, {
+                opacity: 0, duration: 0.5, ease: "power1.inOut",
+                onComplete: () => {
+                    preloader.style.display = 'none';
+                    console.log("Preloader hidden. Initializing main animations...");
                     initializeAnimations();
-                    initializeMobileMenu();
-                }, 500); // This matches the preloader fade-out duration
-            }
-        });
-    } else {
-        console.warn("GSAP not found for preloader animation, using fallback...");
-        // Fallback if GSAP is not available
-        setTimeout(() => {
-            preloader.classList.add('hidden');
-            
-            // Wait for preloader to fade out before initializing other animations
-            setTimeout(() => {
-                initializeAnimations();
-                initializeMobileMenu();
-            }, 500);
-        }, 1000);
-    }
-};
+                }
+            }, "-=0.1");
+    });
+}
 
-// Handle window resize for responsive animations
-window.addEventListener('resize', function() {
-    // Refresh ScrollTrigger on window resize
-    if (typeof ScrollTrigger !== 'undefined') {
-        ScrollTrigger.refresh();
-    }
-});
+handlePreloader();
