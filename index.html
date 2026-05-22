@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uplift Founders - Concept</title>
+    <title>Uplift Founders — Empowering Startup Leaders</title>
 
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- Google Fonts: Syne (Display), Plus Jakarta Sans (Sans), Space Grotesk (Accent/Mono) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Oswald:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
 
+    <!-- CSS stylesheet -->
     <link rel="stylesheet" href="main.css">
 
+    <!-- Lucide Icons Font Face (Fallback CSS) -->
     <style>
       @font-face {
         font-family: 'LucideIcons';
@@ -24,326 +28,522 @@
         display: inline-block;
       }
     </style>
-
 </head>
-<body class="antialiased">
+<body class="antialiased font-sans text-neutral-900 bg-[#FAF8F5] selection:bg-[#5D5FEF] selection:text-white">
 
-    <div id="preloader">
-        <div id="preloader-logo" class="text-6xl font-black text-[#1f2937]">u</div>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor-dot" aria-hidden="true"></div>
+    <div class="custom-cursor-ring" aria-hidden="true"></div>
+
+    <!-- Tactile Noise Grain Overlay -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- Preloader -->
+    <div id="preloader" class="flex flex-col items-center justify-center bg-[#FAF8F5] fixed inset-0 z-[9999]">
+        <div id="preloader-logo" class="font-display text-8xl font-extrabold text-[#111111] select-none">u.</div>
     </div>
 
-    <header class="py-4 px-4 sm:px-6 lg:px-8 sticky top-0 bg-[#F8F4EC] bg-opacity-90 backdrop-blur-sm z-50 border-b border-gray-200/50" role="banner">
+    <!-- Header / Navigation -->
+    <header class="py-5 px-4 sm:px-6 lg:px-8 sticky top-0 bg-[#FAF8F5]/80 backdrop-blur-md z-50 border-b border-neutral-200/50" role="banner">
          <nav class="flex justify-between items-center max-w-7xl mx-auto" aria-label="Main Navigation">
             <div class="flex-shrink-0">
-                <span class="text-3xl font-black text-[#1f2937]">u</span>
+                <a href="#" class="logo-link font-display text-3xl font-black text-[#111111] magnetic-btn inline-block">
+                    <span>u.</span>
+                </a>
             </div>
-            <div class="hidden md:flex space-x-6 lg:space-x-8 items-center">
-                <a href="#" class="nav-link text-sm font-medium text-gray-600">What Founders Say</a>
-                <a href="#" class="nav-link text-sm font-medium text-gray-600">Manifesto</a>
-                <a href="#" class="nav-link text-sm font-medium text-gray-600">About Us</a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#founders-say" class="rolling-link font-accent text-xs font-semibold tracking-widest text-neutral-500 uppercase">
+                    <span class="rolling-link-inner">
+                        <span class="rolling-link-text">What Founders Say</span>
+                        <span class="rolling-link-text text-[#111111]" aria-hidden="true">What Founders Say</span>
+                    </span>
+                </a>
+                <a href="#manifesto" class="rolling-link font-accent text-xs font-semibold tracking-widest text-neutral-500 uppercase">
+                    <span class="rolling-link-inner">
+                        <span class="rolling-link-text">Manifesto</span>
+                        <span class="rolling-link-text text-[#111111]" aria-hidden="true">Manifesto</span>
+                    </span>
+                </a>
+                <a href="#about-us" class="rolling-link font-accent text-xs font-semibold tracking-widest text-neutral-500 uppercase">
+                    <span class="rolling-link-inner">
+                        <span class="rolling-link-text">About Us</span>
+                        <span class="rolling-link-text text-[#111111]" aria-hidden="true">About Us</span>
+                    </span>
+                </a>
             </div>
             <div class="flex-shrink-0">
-                <a href="mailto:hello@upliftco.example.com?subject=Inquiry%20from%20Website" class="btn btn-primary bg-[#6C63FF] text-white px-5 py-2 rounded-md text-xs font-medium uppercase tracking-wider shadow no-underline"> Tell Us About You </a>
+                <a href="mailto:hello@upliftco.example.com?subject=Inquiry%20from%20Website" class="btn btn-primary bg-[#111111] hover:bg-[#5D5FEF] text-white font-accent text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full transition-all duration-300 magnetic-btn">
+                    <span>Get In Touch</span>
+                </a>
             </div>
-            <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-gray-700 hover:text-black focus:outline-none" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-button" class="hamburger-btn focus:outline-none w-10 h-10 flex flex-col justify-center items-center relative z-50 magnetic-btn" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu-overlay">
+                    <div class="hamburger-line line-top bg-neutral-900 w-6 h-[2px] mb-1.5 transition-all duration-300"></div>
+                    <div class="hamburger-line line-bottom bg-neutral-900 w-6 h-[2px] transition-all duration-300"></div>
                 </button>
             </div>
         </nav>
-         <div id="mobile-menu" class="mobile-menu md:hidden mt-4 space-y-2 px-4" role="navigation" aria-label="Mobile Navigation">
-            <a href="#" class="block nav-link text-sm font-medium text-gray-600 py-1">What Founders Say</a>
-            <a href="#" class="block nav-link text-sm font-medium text-gray-600 py-1">Manifesto</a>
-            <a href="#" class="block nav-link text-sm font-medium text-gray-600 py-1">About Us</a>
-         </div>
     </header>
 
+    <!-- Fullscreen Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-[#0C0C0E] z-[48] flex flex-col justify-center px-6 sm:px-12 md:hidden" role="navigation" aria-label="Mobile Navigation">
+        <div class="flex flex-col space-y-8 text-left max-w-lg mx-auto w-full">
+            <span class="font-accent text-neutral-600 text-xs font-bold tracking-widest uppercase mb-2 block">Navigation</span>
+            
+            <div class="mobile-overlay-item overflow-hidden">
+                <a href="#founders-say" class="mobile-overlay-link font-display text-4xl sm:text-5xl text-white font-bold block py-2 uppercase hover:text-[#D2F53C] transition-colors">What Founders Say</a>
+            </div>
+            <div class="mobile-overlay-item overflow-hidden">
+                <a href="#manifesto" class="mobile-overlay-link font-display text-4xl sm:text-5xl text-white font-bold block py-2 uppercase hover:text-[#D2F53C] transition-colors">Manifesto</a>
+            </div>
+            <div class="mobile-overlay-item overflow-hidden">
+                <a href="#about-us" class="mobile-overlay-link font-display text-4xl sm:text-5xl text-white font-bold block py-2 uppercase hover:text-[#D2F53C] transition-colors">About Us</a>
+            </div>
+            
+            <div class="pt-8 border-t border-neutral-800 flex flex-col space-y-4">
+                <span class="font-accent text-neutral-600 text-[10px] font-bold tracking-widest uppercase">Get In Touch</span>
+                <a href="mailto:hello@upliftco.example.com?subject=Inquiry" class="font-display text-xl sm:text-2xl text-[#D2F53C] hover:text-white transition-colors">hello@upliftco.example.com</a>
+            </div>
+        </div>
+    </div>
+
     <main role="main">
-        <section class="hero-section py-20 px-4 sm:px-6 lg:px-8 text-center max-w-5xl mx-auto overflow-hidden" role="region" aria-label="Hero Section">
-            <div class="hero-headline-wrapper">
-                <h1 id="hero-headline" class="hero-headline mb-6">
-                    <span class="hero-word">WE</span> <span class="hero-word">UP</span><span class="img-placeholder-wrapper">L<img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=80&h=80&q=60" alt="Founder photo 1" class="img-placeholder pos-l" onerror="this.onerror=null;this.src='https://placehold.co/80x80/cccccc/ffffff?text=F1';"></span><span class="hero-word">IFT</span>
-                    <span class="hero-word">FOUNDERS</span><span class="img-placeholder-wrapper">S<img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=80&h=80&q=60" alt="Founder photo 2" class="img-placeholder pos-s" onerror="this.onerror=null;this.src='https://placehold.co/80x80/cccccc/ffffff?text=F2';"></span>
+        
+        <!-- Hero Section -->
+        <section class="hero-section py-24 md:py-36 px-4 sm:px-6 lg:px-8 text-center max-w-6xl mx-auto overflow-hidden" role="region" aria-label="Hero Section">
+            <div class="hero-headline-wrapper mb-8">
+                <h1 id="hero-headline" class="hero-headline font-display text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black leading-[0.95] tracking-tighter">
+                    <span class="hero-word">WE</span> 
+                    <span class="hero-word">UP<span class="img-placeholder-wrapper">L<img src="img/hero-avatar-1.png" alt="Founder photo 1" class="img-placeholder pos-l" onerror="this.onerror=null;this.src='https://placehold.co/80x80/cccccc/ffffff?text=F1';"></span>IFT</span>
+                    <span class="hero-word">FOUNDERS<span class="img-placeholder-wrapper">S<img src="img/hero-avatar-2.png" alt="Founder photo 2" class="img-placeholder pos-s" onerror="this.onerror=null;this.src='https://placehold.co/80x80/cccccc/ffffff?text=F2';"></span></span>
                 </h1>
             </div>
-            <p id="hero-subtext" class="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-                Helping founders to GROW through uncertainty & MAXIMIZE their impact.
+            <p id="hero-subtext" class="text-lg sm:text-xl text-neutral-500 font-sans max-w-2xl mx-auto mb-10 leading-relaxed">
+                Helping founders to GROW through uncertainty &amp; MAXIMIZE their impact.
             </p>
-             <a href="mailto:hello@upliftco.example.com?subject=Inquiry%20from%20Website" id="hero-button" class="btn btn-primary bg-[#6C63FF] text-white px-8 py-3 rounded-md text-sm font-medium uppercase tracking-wider shadow-md no-underline">
-                 Tell Us About You
-             </a>
+            <div class="inline-block">
+                <a href="mailto:hello@upliftco.example.com?subject=Inquiry%20from%20Website" id="hero-button" class="btn btn-primary bg-[#5D5FEF] hover:bg-[#111111] text-white font-accent text-xs font-bold uppercase tracking-widest px-8 py-4 rounded-full transition-all duration-300 magnetic-btn">
+                    <span>Tell Us About You</span>
+                </a>
+            </div>
         </section>
 
-        <section class="animate-section py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" role="region" aria-label="Testimonials and Trust">
-             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                 <div id="testimonial-slider" class="animate-element animate-left relative overflow-hidden" role="group" aria-roledescription="carousel" aria-label="Founder Testimonials">
+        <!-- Testimonial Slider / Trust Section -->
+        <section id="founders-say" class="animate-section py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-neutral-200/50" role="region" aria-label="Testimonials and Trust">
+             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+                 
+                 <!-- Slider Card Container -->
+                 <div id="testimonial-slider" class="animate-element lg:col-span-7 relative overflow-hidden drag-hover-target" role="group" aria-roledescription="carousel" aria-label="Founder Testimonials">
                      <div id="testimonial-wrapper" class="flex" aria-live="polite">
+                         
+                         <!-- Card 1 -->
                          <div class="testimonial-card w-full flex-shrink-0" role="group" aria-label="Slide 1 of 3">
-                             <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 h-full flex flex-col">
-                                 <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=60&h=60&q=60" alt="Ann Sophie Claus" class="w-12 h-12 rounded-full mb-4 flex-shrink-0 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/ffffff?text=AC';">
-                                 <p class="text-gray-700 italic mb-4 text-sm leading-relaxed flex-grow">"Yannick is one of the most inspiring leaders I know..."</p>
-                                 <div>
-                                     <p class="font-semibold text-gray-800 text-sm">ANN SOPHIE CLAUS</p>
-                                     <p class="text-xs text-gray-500 uppercase tracking-wide">FOUNDER & CEO THE FEMALE COMPANY</p>
-                                 </div>
-                             </div>
+                              <div class="bg-[#FAF8F5] p-8 sm:p-12 rounded-3xl border border-neutral-200/60 h-full flex flex-col justify-between tilt-card">
+                                  <p class="text-neutral-800 text-lg sm:text-xl leading-relaxed mb-8 font-sans font-medium tilt-child-3d-md">"Yannick is one of the most inspiring leaders I know. His strategic clarity and empathy completely restructured how I approach scaling our operations."</p>
+                                  <div class="flex items-center space-x-4 border-t border-neutral-200/40 pt-6 tilt-child-3d-sm">
+                                      <img src="img/testimonial-ann.png" alt="Ann Sophie Claus" class="w-12 h-12 rounded-full object-cover border border-neutral-300" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/ffffff?text=AC';">
+                                      <div>
+                                          <p class="font-display font-bold text-sm tracking-tight text-neutral-900 uppercase">Ann Sophie Claus</p>
+                                          <p class="font-accent text-[10px] text-neutral-400 uppercase tracking-widest font-semibold mt-0.5">Founder &amp; CEO, The Female Company</p>
+                                      </div>
+                                  </div>
+                              </div>
                          </div>
+                         
+                         <!-- Card 2 -->
                          <div class="testimonial-card w-full flex-shrink-0" role="group" aria-label="Slide 2 of 3" aria-hidden="true">
-                             <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 h-full flex flex-col">
-                                 <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=60&h=60&q=60" alt="John Brown" class="w-12 h-12 rounded-full mb-4 flex-shrink-0 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/ffffff?text=JB';">
-                                 <p class="text-gray-700 italic mb-4 text-sm leading-relaxed flex-grow">"The strategic insights provided were invaluable..."</p>
-                                 <div>
-                                     <p class="font-semibold text-gray-800 text-sm">JOHN BROWN</p>
-                                     <p class="text-xs text-gray-500 uppercase tracking-wide">CTO, TECH SOLUTIONS INC.</p>
-                                 </div>
-                             </div>
+                              <div class="bg-[#FAF8F5] p-8 sm:p-12 rounded-3xl border border-neutral-200/60 h-full flex flex-col justify-between tilt-card">
+                                  <p class="text-neutral-800 text-lg sm:text-xl leading-relaxed mb-8 font-sans font-medium tilt-child-3d-md">"The strategic insights provided were invaluable. Navigating our Series A funding round with their guidance saved us months of missteps."</p>
+                                  <div class="flex items-center space-x-4 border-t border-neutral-200/40 pt-6 tilt-child-3d-sm">
+                                      <img src="img/testimonial-john.png" alt="John Brown" class="w-12 h-12 rounded-full object-cover border border-neutral-300" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/ffffff?text=JB';">
+                                      <div>
+                                          <p class="font-display font-bold text-sm tracking-tight text-neutral-900 uppercase">John Brown</p>
+                                          <p class="font-accent text-[10px] text-neutral-400 uppercase tracking-widest font-semibold mt-0.5">CTO, Tech Solutions Inc.</p>
+                                      </div>
+                                  </div>
+                              </div>
                          </div>
+                         
+                         <!-- Card 3 -->
                          <div class="testimonial-card w-full flex-shrink-0" role="group" aria-label="Slide 3 of 3" aria-hidden="true">
-                             <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 h-full flex flex-col">
-                                 <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=60&h=60&q=60" alt="Linda Smith" class="w-12 h-12 rounded-full mb-4 flex-shrink-0 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/ffffff?text=LS';">
-                                 <p class="text-gray-700 italic mb-4 text-sm leading-relaxed flex-grow">"Navigating the fundraising landscape was daunting..."</p>
-                                 <div>
-                                     <p class="font-semibold text-gray-800 text-sm">LINDA SMITH</p>
-                                     <p class="text-xs text-gray-500 uppercase tracking-wide">CEO, GROWTH VENTURES</p>
-                                 </div>
+                              <div class="bg-[#FAF8F5] p-8 sm:p-12 rounded-3xl border border-neutral-200/60 h-full flex flex-col justify-between tilt-card">
+                                  <p class="text-neutral-800 text-lg sm:text-xl leading-relaxed mb-8 font-sans font-medium tilt-child-3d-md">"Navigating the fundraising landscape was daunting. UpLift Founders provided a structural framework and community that helped us scale 4x in 12 months."</p>
+                                  <div class="flex items-center space-x-4 border-t border-neutral-200/40 pt-6 tilt-child-3d-sm">
+                                      <img src="img/testimonial-linda.png" alt="Linda Smith" class="w-12 h-12 rounded-full object-cover border border-neutral-300" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/ffffff?text=LS';">
+                                      <div>
+                                          <p class="font-display font-bold text-sm tracking-tight text-neutral-900 uppercase">Linda Smith</p>
+                                          <p class="font-accent text-[10px] text-neutral-400 uppercase tracking-widest font-semibold mt-0.5">CEO, Growth Ventures</p>
+                                      </div>
+                                  </div>
+                              </div>
+                         </div>
+                         
+                     </div>
+                     <div class="mt-8 flex space-x-3">
+                         <button id="prev-testimonial" class="testimonial-arrow w-10 h-10 rounded-full border border-neutral-200 hover:bg-[#111111] hover:text-white transition-all flex items-center justify-center magnetic-btn" aria-label="Previous testimonial" aria-controls="testimonial-wrapper">
+                             <span>&larr;</span>
+                         </button>
+                         <button id="next-testimonial" class="testimonial-arrow w-10 h-10 rounded-full border border-neutral-200 hover:bg-[#111111] hover:text-white transition-all flex items-center justify-center magnetic-btn" aria-label="Next testimonial" aria-controls="testimonial-wrapper">
+                             <span>&rarr;</span>
+                         </button>
+                     </div>
+                 </div>
+                 
+                 <!-- Trust Headline Text -->
+                 <div class="animate-element lg:col-span-5 text-left lg:pl-8">
+                     <h2 class="trust-headline font-display text-4xl sm:text-5xl font-black uppercase tracking-tighter text-neutral-900 mb-6 leading-[1.05]">
+                         Trusted by founders of high-growth startups.
+                     </h2>
+                     <p class="text-neutral-500 font-sans text-base leading-relaxed">
+                         We partner with ambitious founders who are ready to scale their vision, build robust executive leadership skills, and make a lasting industry impact.
+                     </p>
+                 </div>
+                 
+             </div>
+        </section>
+
+        <!-- Parallax and Compassion Section -->
+        <section id="manifesto" class="animate-section py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-[#0C0C0E] text-white relative overflow-hidden" role="region" aria-label="Our Approach">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center relative z-10">
+                 
+                 <div class="animate-element text-left md:pr-12">
+                     <h2 class="we-will-headline font-display text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight mb-8 leading-[1.05]">
+                         Building a successful company can feel like a <span class="font-serif italic font-normal text-neutral-400 lowercase">rollercoaster ride.</span> Compassion alone won't get you there.
+                     </h2>
+                     <p class="we-will-headline font-display text-5xl sm:text-6xl font-black uppercase tracking-tighter text-[#D2F53C]">
+                         WE WILL.
+                     </p>
+                 </div>
+                 
+                 <div class="animate-element image-reveal-wrapper rounded-3xl overflow-hidden aspect-[4/3] max-w-xl mx-auto w-full border border-neutral-800">
+                     <div class="h-full w-full flex items-center justify-center bg-neutral-900 overflow-hidden">
+                         <img src="img/approach-growth.png" alt="Business context image showing growth or planning" class="reveal-image w-full h-full object-cover scale-110" onerror="this.onerror=null;this.src='https://placehold.co/400x250/cccccc/ffffff?text=Image+Error';">
+                     </div>
+                 </div>
+                 
+            </div>
+            
+            <!-- Animated Squiggle -->
+            <div class="absolute bottom-12 right-12 md:bottom-20 md:right-1/4 opacity-40 z-10">
+                 <svg class="squiggle w-36 h-auto" viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path id="squiggle-path" d="M 0 15 Q 10 0, 20 15 T 40 15 Q 50 30, 60 15 T 80 15 Q 90 0, 100 15" stroke-linecap="round" stroke-linejoin="round" stroke="#D2F53C" stroke-width="4" fill="none"/></svg>
+            </div>
+        </section>
+
+        <!-- Value Proposition Section -->
+        <section class="animate-section py-20 md:py-28 px-4 sm:px-6 lg:px-8 border-b border-neutral-200/50" role="region" aria-label="Value Proposition">
+             <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
+                  
+                  <div class="animate-element text-left">
+                       <h2 class="value-prop-headline font-display text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight leading-[1.05] mb-8 text-neutral-900">
+                           We empower you to become the founder your company needs to scale faster.
+                       </h2>
+                       <a href="#" class="font-accent text-xs font-bold tracking-widest text-[#5D5FEF] hover:text-[#111111] transition-colors flex items-center space-x-2">
+                           <span>EXPLORE OUR PROGRAMS</span> <span>&rarr;</span>
+                       </a>
+                  </div>
+                  
+                  <div class="animate-element image-reveal-wrapper rounded-3xl overflow-hidden aspect-[4/3] max-w-xl mx-auto w-full border border-neutral-200/60">
+                       <div class="h-full w-full bg-neutral-100 overflow-hidden">
+                           <img src="img/dashboard-mockup.png" alt="Mockup of a web application interface" class="reveal-image w-full h-full object-cover scale-110" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Error';">
+                       </div>
+                  </div>
+                  
+             </div>
+        </section>
+
+        <!-- Horizontal Scroll Section (Pinned Stages) -->
+        <section id="horizontal-scroll-container" class="horizontal-scroll-section bg-[#0C0C0E] relative overflow-hidden" role="region" aria-label="Founder Journey Stages">
+            
+            <!-- Floating Awwwards Header Timeline -->
+            <div class="horiz-scroll-header absolute top-10 left-4 sm:left-6 lg:left-8 right-4 sm:right-6 lg:right-8 flex justify-between items-center z-20 text-neutral-500 font-accent uppercase text-xs tracking-widest">
+                <span class="text-neutral-400">Founder Journey Stages</span>
+                <div class="flex items-center space-x-6">
+                    <div class="flex space-x-4">
+                        <span class="slide-step-num active cursor-pointer hover:text-white" data-step="0">01</span>
+                        <span class="slide-step-num cursor-pointer hover:text-white" data-step="1">02</span>
+                        <span class="slide-step-num cursor-pointer hover:text-white" data-step="2">03</span>
+                        <span class="slide-step-num cursor-pointer hover:text-white" data-step="3">04</span>
+                    </div>
+                    <div class="horiz-progress-bar-container bg-neutral-800 w-24 h-[2px] relative overflow-hidden hidden sm:block">
+                        <div class="horiz-progress-bar-fill bg-[#D2F53C] absolute top-0 left-0 h-full w-0"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Horizontal Track -->
+            <div id="horizontal-scroll-track" class="horizontal-scroll-track flex h-full">
+                
+                <!-- Stage 1 -->
+                <div class="slide flex-shrink-0 w-screen h-screen flex items-center justify-center px-6 sm:px-16">
+                     <div class="slide__content bg-neutral-900/40 border border-neutral-800/80 backdrop-blur-md p-8 sm:p-12 md:p-16 rounded-3xl w-full max-w-4xl">
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-center">
+                             <div class="text-left">
+                                 <span class="font-accent text-[#D2F53C] text-xs font-bold tracking-widest block mb-4">STAGE 01</span>
+                                 <h2 class="slide__heading font-display text-4xl sm:text-5xl text-white font-bold mb-6">Seed &amp; Strategy</h2>
+                                 <p class="slide__description text-neutral-400 text-sm sm:text-base leading-relaxed mb-0 font-sans">
+                                     Gain total clarity on your vision and construct a clear strategic roadmap. We help you refine your pitch, outline mission-critical metrics, and prepare for institutional fundraising.
+                                 </p>
                              </div>
+                             <figure class="slide__img-cont rounded-2xl overflow-hidden aspect-[4/3] w-full border border-neutral-800">
+                                 <img class="slide__img w-full h-full object-cover" src="img/stage-1-strategy.png" alt="Team discussing strategy around a table" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Error';">
+                             </figure>
                          </div>
                      </div>
-                     <div class="mt-6 flex space-x-2">
-                         <button id="prev-testimonial" class="testimonial-arrow" aria-label="Previous testimonial" aria-controls="testimonial-wrapper">
-                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                         </button>
-                         <button id="next-testimonial" class="testimonial-arrow" aria-label="Next testimonial" aria-controls="testimonial-wrapper">
-                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                         </button>
+                </div>
+                
+                <!-- Stage 2 -->
+                <div class="slide flex-shrink-0 w-screen h-screen flex items-center justify-center px-6 sm:px-16">
+                     <div class="slide__content bg-neutral-900/40 border border-neutral-800/80 backdrop-blur-md p-8 sm:p-12 md:p-16 rounded-3xl w-full max-w-4xl">
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-center">
+                             <div class="text-left">
+                                 <span class="font-accent text-[#D2F53C] text-xs font-bold tracking-widest block mb-4">STAGE 02</span>
+                                 <h2 class="slide__heading font-display text-4xl sm:text-5xl text-white font-bold mb-6">Leadership Growth</h2>
+                                 <p class="slide__description text-neutral-400 text-sm sm:text-base leading-relaxed mb-0 font-sans">
+                                     Evolve from an executor to an executive leader. Develop operational resilience, master board communication, scale high-performing cultures, and manage high-stakes ambiguity.
+                                 </p>
+                             </div>
+                             <figure class="slide__img-cont rounded-2xl overflow-hidden aspect-[4/3] w-full border border-neutral-800">
+                                 <img class="slide__img w-full h-full object-cover" src="img/stage-2-leadership.png" alt="Diverse group of people collaborating" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Error';">
+                             </figure>
+                         </div>
                      </div>
+                </div>
+                
+                <!-- Stage 3 -->
+                <div class="slide flex-shrink-0 w-screen h-screen flex items-center justify-center px-6 sm:px-16">
+                     <div class="slide__content bg-neutral-900/40 border border-neutral-800/80 backdrop-blur-md p-8 sm:p-12 md:p-16 rounded-3xl w-full max-w-4xl">
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-center">
+                             <div class="text-left">
+                                 <span class="font-accent text-[#D2F53C] text-xs font-bold tracking-widest block mb-4">STAGE 03</span>
+                                 <h2 class="slide__heading font-display text-4xl sm:text-5xl text-white font-bold mb-6">Operational Scaling</h2>
+                                 <p class="slide__description text-neutral-400 text-sm sm:text-base leading-relaxed mb-0 font-sans">
+                                     Move beyond early startup hustle. Build robust functional leadership, design automated workflows, structure corporate operations, and sustain product market fit.
+                                 </p>
+                             </div>
+                             <figure class="slide__img-cont rounded-2xl overflow-hidden aspect-[4/3] w-full border border-neutral-800">
+                                 <img class="slide__img w-full h-full object-cover" src="img/stage-3-scaling.png" alt="People working on a complex flowchart or plan" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Error';">
+                             </figure>
+                         </div>
+                     </div>
+                </div>
+                
+                <!-- Stage 4 -->
+                <div class="slide flex-shrink-0 w-screen h-screen flex items-center justify-center px-6 sm:px-16">
+                     <div class="slide__content bg-neutral-900/40 border border-neutral-800/80 backdrop-blur-md p-8 sm:p-12 md:p-16 rounded-3xl w-full max-w-4xl">
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-center">
+                             <div class="text-left">
+                                 <span class="font-accent text-[#D2F53C] text-xs font-bold tracking-widest block mb-4">STAGE 04</span>
+                                 <h2 class="slide__heading font-display text-4xl sm:text-5xl text-white font-bold mb-6">Community &amp; Network</h2>
+                                 <p class="slide__description text-neutral-400 text-sm sm:text-base leading-relaxed mb-0 font-sans">
+                                     Avoid leadership isolation. Gain direct access to a global peer network of growth-stage founders, veteran executives, capital investors, and top-tier talent.
+                                 </p>
+                             </div>
+                             <figure class="slide__img-cont rounded-2xl overflow-hidden aspect-[4/3] w-full border border-neutral-800">
+                                 <img class="slide__img w-full h-full object-cover" src="img/stage-4-community.png" alt="Group of people connecting and talking" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Error';">
+                             </figure>
+                         </div>
+                     </div>
+                </div>
+                
+             </div>
+        </section>
+
+        <!-- Team Section -->
+        <section id="about-us" class="animate-section py-20 md:py-28 px-4 sm:px-6 lg:px-8 border-t border-b border-neutral-200/50" role="region" aria-label="Team and Experience">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+                 
+                 <div class="animate-element lg:col-span-5 text-left">
+                     <h2 class="team-headline font-display text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-black uppercase tracking-tighter text-neutral-900 leading-[1.05]">
+                         We've been through it all.
+                     </h2>
                  </div>
-                 <div class="animate-element animate-right relative text-center md:text-left">
-                     <h2 class="trust-headline text-3xl sm:text-4xl font-bold uppercase tracking-tight mb-4">TRUSTED BY FOUNDERS OF HIGH-GROWTH STARTUPS</h2>
-                     <p class="text-gray-600 mb-6">We partner with ambitious founders who are ready to scale their vision and make a lasting impact.</p>
+                 
+                 <div class="lg:col-span-7 space-y-12 lg:space-y-16">
+                     
+                     <!-- Coaches Portraits Grid -->
+                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12">
+                         
+                         <!-- Yannick -->
+                         <div class="animate-element scrub-x-element text-left flex flex-col items-start">
+                             <div class="image-reveal-wrapper rounded-3xl overflow-hidden w-40 h-40 border border-neutral-200/60 mb-4">
+                                 <img src="img/coach-yannick.png" alt="Yannick Frank Headshot" class="reveal-image w-full h-full object-cover scale-110" onerror="this.onerror=null;this.src='https://placehold.co/200x200/cccccc/ffffff?text=YF';">
+                             </div>
+                             <h3 class="font-display font-bold text-xl text-neutral-900 uppercase">Yannick Frank</h3>
+                             <p class="font-accent text-[11px] text-neutral-400 font-semibold tracking-widest mt-1 uppercase">Co-Founder &amp; Coach</p>
+                         </div>
+                         
+                         <!-- Till -->
+                         <div class="animate-element scrub-x-element text-left flex flex-col items-start">
+                             <div class="image-reveal-wrapper rounded-3xl overflow-hidden w-40 h-40 border border-neutral-200/60 mb-4">
+                                 <img src="img/coach-till.png" alt="Till Augner Headshot" class="reveal-image w-full h-full object-cover scale-110" onerror="this.onerror=null;this.src='https://placehold.co/200x200/cccccc/ffffff?text=TA';">
+                             </div>
+                             <h3 class="font-display font-bold text-xl text-neutral-900 uppercase">Till Augner</h3>
+                             <p class="font-accent text-[11px] text-neutral-400 font-semibold tracking-widest mt-1 uppercase">Co-Founder &amp; Coach</p>
+                         </div>
+                         
+                     </div>
+                     
+                     <!-- Core Pillars Grid -->
+                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 border-t border-neutral-200/60 pt-8 sm:pt-12">
+                          <div class="animate-element team-info-box tilt-card bg-white border border-neutral-200/60 p-6 rounded-2xl">
+                              <h4 class="font-display font-bold text-base text-neutral-900 uppercase mb-2 tilt-child-3d-md">Empathy</h4>
+                              <p class="text-sm text-neutral-500 leading-relaxed font-sans tilt-child-3d-sm">We've built organizations ourselves, navigating the exact leadership pressures you experience.</p>
+                          </div>
+                          <div class="animate-element team-info-box tilt-card bg-white border border-neutral-200/60 p-6 rounded-2xl">
+                              <h4 class="font-display font-bold text-base text-neutral-900 uppercase mb-2 tilt-child-3d-md">Experience</h4>
+                              <p class="text-sm text-neutral-500 leading-relaxed font-sans tilt-child-3d-sm">Direct strategic advisory provided to 200+ founders across global growth cycles.</p>
+                          </div>
+                          <div class="animate-element team-info-box tilt-card bg-white border border-neutral-200/60 p-6 rounded-2xl">
+                              <h4 class="font-display font-bold text-base text-neutral-900 uppercase mb-2 tilt-child-3d-md">Availability</h4>
+                              <p class="text-sm text-neutral-500 leading-relaxed font-sans tilt-child-3d-sm">Dedicated 1:1 async coaching channels available whenever urgent hurdles emerge.</p>
+                          </div>
+                     </div>
+                     
                  </div>
             </div>
         </section>
 
-        <section class="animate-section parallax-section py-20 px-4 sm:px-6 lg:px-8 bg-[#CAD3B8] relative overflow-hidden" role="region" aria-label="Our Approach">
-            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
-                 <div class="animate-element animate-left md:pr-8">
-                     <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4 leading-tight">Building a successful company can feel like a <span class="italic">rollercoaster ride.</span> Compassion alone won't get you there.</h2>
-                     <p class="we-will-headline text-4xl font-bold uppercase tracking-tight text-gray-800">WE WILL.</p>
-                 </div>
-                 <div class="animate-element animate-right image-reveal-wrapper">
-                     <div class="bg-gray-700 h-64 rounded-lg flex items-center justify-center text-white overflow-hidden">
-                         <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YnVzaW5lc3MlMjBncm93dGh8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=400&q=60" alt="Business context image showing growth or planning" class="reveal-image w-full h-full object-cover rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/400x250/cccccc/ffffff?text=Image+Error';">
-                     </div>
-                 </div>
-            </div>
-             <div class="animate-element absolute bottom-10 right-10 md:bottom-16 md:right-1/4 lg:right-1/3 transform translate-x-1/4 -translate-y-1/4 opacity-70 z-10 md:z-20">
-                 <svg class="squiggle" viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path id="squiggle-path" d="M 0 15 Q 10 0, 20 15 T 40 15 Q 50 30, 60 15 T 80 15 Q 90 0, 100 15" stroke-linecap="round" stroke-linejoin="round"/></svg>
-             </div>
-        </section>
-
-        <section class="animate-section py-20 px-4 sm:px-6 lg:px-8" role="region" aria-label="Value Proposition">
-             <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-                  <div class="animate-element animate-left">
-                      <h2 class="value-prop-headline text-4xl sm:text-5xl font-bold uppercase tracking-tight leading-tight mb-6">WE EMPOWER YOU TO BECOME THE FOUNDER YOUR COMPANY NEEDS TO SCALE FASTER</h2>
-                      <a href="#" class="text-[#6C63FF] font-semibold hover:underline">Explore our programs &rarr;</a>
-                  </div>
-                  <div class="animate-element animate-right scrub-x-element bg-gray-900 p-4 rounded-lg shadow-xl border border-gray-700">
-                      <img src="https://images.unsplash.com/photo-1587440871875-191322ee64b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8d2ViJTIwYXBwfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60" alt="Mockup of a web application interface" class="w-full h-auto rounded" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Error';">
-                  </div>
-             </div>
-        </section>
-
-        <section id="horizontal-scroll-container" class="horizontal-scroll-section animate-section" role="region" aria-label="Founder Journey Stages">
-            <div id="horizontal-scroll-track" class="horizontal-scroll-track">
-                <div class="slide">
-                    <div class="slide__outer">
-                        <div class="slide__inner">
-                            <div class="slide__content">
-                                <div class="slide__container">
-                                    <h2 class="slide__heading">Seed & Strategy</h2>
-                                    <p class="slide__description">Gain clarity on your vision and build a strategic roadmap. We help you refine your pitch, define key metrics, and prepare for successful fundraising.</p>
-                                    <figure class="slide__img-cont">
-                                        <img class="slide__img" src='https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3RyYXRlZ3l8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=600&q=60' alt='Team discussing strategy around a table' onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Error';">
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="slide">
-                    <div class="slide__outer">
-                        <div class="slide__inner">
-                            <div class="slide__content">
-                                <div class="slide__container">
-                                    <h2 class="slide__heading">Leadership Growth</h2>
-                                    <p class="slide__description">Evolve from founder to leader. Develop resilience, master communication, build high-performing teams, and navigate uncertainty with confidence.</p>
-                                    <figure class="slide__img-cont">
-                                        <img class="slide__img" src='https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGVhZGVyc2hpcHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=600&q=60' alt='Diverse group of people collaborating' onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Error';">
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="slide">
-                    <div class="slide__outer">
-                        <div class="slide__inner">
-                            <div class="slide__content">
-                                <div class="slide__container">
-                                    <h2 class="slide__heading">Operational Scaling</h2>
-                                    <p class="slide__description">Move beyond startup hustle. Implement robust systems, optimize processes, and build the operational foundation for sustainable, scalable growth.</p>
-                                    <figure class="slide__img-cont">
-                                        <img class="slide__img" src='https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8b3BlcmF0aW9uc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=600&q=60' alt='People working on a complex flowchart or plan' onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Error';">
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="slide">
-                    <div class="slide__outer">
-                        <div class="slide__inner">
-                            <div class="slide__content">
-                                <div class="slide__container">
-                                    <h2 class="slide__heading">Community & Network</h2>
-                                    <p class="slide__description">You're not alone on this journey. Tap into a curated network of peers, mentors, and resources for support, shared learning, and invaluable connections.</p>
-                                    <figure class="slide__img-cont">
-                                        <img class="slide__img" src='https://images.unsplash.com/photo-1517048676732-d65bc937f952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y29tbXVuaXR5fGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60' alt='Group of people connecting and talking' onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Error';">
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-             </div>
-        </section>
-
-        <section class="animate-section py-20 px-4 sm:px-6 lg:px-8" role="region" aria-label="Team and Experience">
-            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
-                 <div class="animate-element animate-left md:col-span-1">
-                     <h2 class="team-headline text-4xl sm:text-5xl font-bold uppercase tracking-tight">WE'VE BEEN THROUGH IT ALL</h2>
-                 </div>
-                 <div class="md:col-span-2 space-y-12 mt-12 md:mt-0">
-                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                         <div class="animate-element animate-stagger-item scrub-x-element text-center sm:text-left">
-                             <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8bWFsZSUyMHByb2Zlc3Npb25hbCUyMHBvcnRyYWl0fGVufDB8fDB8fHww&auto=format&fit=crop&w=200&h=200&q=60" alt="Yannick Frank Headshot" class="w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto sm:mx-0 mb-4 shadow-md object-cover" onerror="this.onerror=null;this.src='https://placehold.co/200x200/cccccc/ffffff?text=YF';">
-                             <h3 class="font-bold text-lg">YANNICK FRANK</h3>
-                             <p class="text-sm text-gray-600">Co-Founder & Coach</p>
-                         </div>
-                         <div class="animate-element animate-stagger-item scrub-x-element text-center sm:text-left">
-                             <img src="https://images.unsplash.com/photo-1557862921-37829c790f19?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bWFsZSUyMHByb2Zlc3Npb25hbCUyMHBvcnRyYWl0fGVufDB8fDB8fHww&auto=format&fit=crop&w=200&h=200&q=60" alt="Till Augner Headshot" class="w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto sm:mx-0 mb-4 shadow-md object-cover" onerror="this.onerror=null;this.src='https://placehold.co/200x200/cccccc/ffffff?text=TA';">
-                             <h3 class="font-bold text-lg">TILL AUGNER</h3>
-                             <p class="text-sm text-gray-600">Co-Founder & Coach</p>
-                         </div>
-                     </div>
-                      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                          <div class="animate-element animate-stagger-item team-info-box">
-                              <h3 class="font-bold mb-2">Empathy</h3>
-                              <p class="text-sm text-gray-600">We've built businesses ourselves, facing the same challenges you do.</p>
-                          </div>
-                          <div class="animate-element animate-stagger-item team-info-box">
-                              <h3 class="font-bold mb-2">Experience</h3>
-                              <p class="text-sm text-gray-600">Coached 200+ founders across diverse industries and stages.</p>
-                          </div>
-                          <div class="animate-element animate-stagger-item team-info-box">
-                              <h3 class="font-bold mb-2">Availability</h3>
-                              <p class="text-sm text-gray-600">Your dedicated partner, available for support when you need it most.</p>
-                          </div>
-                      </div>
-                 </div>
-            </div>
-        </section>
-
-        <section class="animate-section py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto" role="region" aria-label="Frequently Asked Questions">
-             <h2 class="faq-headline animate-element text-4xl font-bold uppercase tracking-tight text-left mb-12">FAQS</h2>
-             <div id="faq-accordion" class="space-y-0">
-                 <div class="faq-item-js animate-element animate-stagger-item border-b border-gray-300">
-                     <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-1">
+        <!-- FAQs Section -->
+        <section class="animate-section py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto" role="region" aria-label="Frequently Asked Questions">
+             <h2 class="faq-headline animate-element font-display text-4xl sm:text-5xl font-black uppercase tracking-tighter text-left mb-10 md:mb-16 text-neutral-900">
+                 FAQs
+             </h2>
+             <div id="faq-accordion" class="border-t border-neutral-200">
+                 
+                 <!-- Q1 -->
+                 <div class="faq-item-js animate-element border-b border-neutral-200 py-5 md:py-6 transition-colors duration-300">
+                     <button class="faq-question w-full flex justify-between items-center text-left py-2 font-display text-lg uppercase tracking-tight text-neutral-900 outline-none" aria-expanded="false" aria-controls="faq-answer-1">
                          <span>What's your approach and offer?</span>
-                         <span class="faq-icon" aria-hidden="true">+</span>
+                         <span class="faq-icon font-mono text-xl text-[#5D5FEF] transition-transform duration-300">&plus;</span>
                      </button>
-                     <div class="faq-answer" id="faq-answer-1" role="region">
-                         <p>We offer personalized 1:1 coaching, peer group masterminds, and strategic advisory focused on critical stages of founder development and company scaling. Our approach combines deep empathy from our own startup experience with proven frameworks for leadership and operational excellence.</p>
+                     <div class="faq-answer overflow-hidden max-h-0 opacity-0 px-1" id="faq-answer-1" role="region">
+                          <p class="text-neutral-500 text-sm sm:text-base leading-relaxed pt-4 pb-2 font-sans">We offer personalized 1:1 coaching, peer group masterminds, and strategic advisory focused on critical stages of founder development and company scaling. Our approach combines deep empathy from our own startup experience with proven frameworks for leadership and operational excellence.</p>
                      </div>
                  </div>
-                 <div class="faq-item-js animate-element animate-stagger-item border-b border-gray-300">
-                     <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-2">
-                         <span>Why should I invest in coaching & mentoring?</span>
-                         <span class="faq-icon" aria-hidden="true">+</span>
+                 
+                 <!-- Q2 -->
+                 <div class="faq-item-js animate-element border-b border-neutral-200 py-5 md:py-6 transition-colors duration-300">
+                     <button class="faq-question w-full flex justify-between items-center text-left py-2 font-display text-lg uppercase tracking-tight text-neutral-900 outline-none" aria-expanded="false" aria-controls="faq-answer-2">
+                         <span>Why should I invest in coaching &amp; mentoring?</span>
+                         <span class="faq-icon font-mono text-xl text-[#5D5FEF] transition-transform duration-300">&plus;</span>
                      </button>
-                     <div class="faq-answer" id="faq-answer-2" role="region">
-                         <p>Running a startup is demanding. Investing in coaching provides objective perspective, accelerates your learning curve, helps you avoid common pitfalls, enhances leadership skills, and ultimately increases your company's potential for success and your well-being as a founder.</p>
+                     <div class="faq-answer overflow-hidden max-h-0 opacity-0 px-1" id="faq-answer-2" role="region">
+                          <p class="text-neutral-500 text-sm sm:text-base leading-relaxed pt-4 pb-2 font-sans">Running a startup is demanding. Investing in coaching provides objective perspective, accelerates your learning curve, helps you avoid common pitfalls, enhances leadership skills, and ultimately increases your company's potential for success and your well-being as a founder.</p>
                      </div>
                  </div>
-                 <div class="faq-item-js animate-element animate-stagger-item border-b border-gray-300">
-                     <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-3">
+                 
+                 <!-- Q3 -->
+                 <div class="faq-item-js animate-element border-b border-neutral-200 py-5 md:py-6 transition-colors duration-300">
+                     <button class="faq-question w-full flex justify-between items-center text-left py-2 font-display text-lg uppercase tracking-tight text-neutral-900 outline-none" aria-expanded="false" aria-controls="faq-answer-3">
                          <span>Do you coach online?</span>
-                         <span class="faq-icon" aria-hidden="true">+</span>
+                         <span class="faq-icon font-mono text-xl text-[#5D5FEF] transition-transform duration-300">&plus;</span>
                      </button>
-                     <div class="faq-answer" id="faq-answer-3" role="region">
-                         <p>Yes, the majority of our coaching and group sessions are conducted online via video conferencing, allowing us to work with founders globally. We prioritize flexibility to fit your demanding schedule.</p>
+                     <div class="faq-answer overflow-hidden max-h-0 opacity-0 px-1" id="faq-answer-3" role="region">
+                          <p class="text-neutral-500 text-sm sm:text-base leading-relaxed pt-4 pb-2 font-sans">Yes, the majority of our coaching and group sessions are conducted online via video conferencing, allowing us to work with founders globally. We prioritize flexibility to fit your demanding schedule.</p>
                      </div>
                  </div>
-                 <div class="faq-item-js animate-element animate-stagger-item border-b border-gray-300">
-                     <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-4">
+                 
+                 <!-- Q4 -->
+                 <div class="faq-item-js animate-element border-b border-neutral-200 py-5 md:py-6 transition-colors duration-300">
+                     <button class="faq-question w-full flex justify-between items-center text-left py-2 font-display text-lg uppercase tracking-tight text-neutral-900 outline-none" aria-expanded="false" aria-controls="faq-answer-4">
                          <span>How long is a coaching session?</span>
-                         <span class="faq-icon" aria-hidden="true">+</span>
+                         <span class="faq-icon font-mono text-xl text-[#5D5FEF] transition-transform duration-300">&plus;</span>
                      </button>
-                     <div class="faq-answer" id="faq-answer-4" role="region">
-                         <p>Typical 1:1 coaching sessions are 60 minutes long. Group mastermind sessions may range from 90 to 120 minutes. We tailor the frequency and duration based on your specific needs and program engagement.</p>
+                     <div class="faq-answer overflow-hidden max-h-0 opacity-0 px-1" id="faq-answer-4" role="region">
+                          <p class="text-neutral-500 text-sm sm:text-base leading-relaxed pt-4 pb-2 font-sans">Typical 1:1 coaching sessions are 60 minutes long. Group mastermind sessions may range from 90 to 120 minutes. We tailor the frequency and duration based on your specific needs and program engagement.</p>
                      </div>
                  </div>
-                 <div class="faq-item-js animate-element animate-stagger-item border-b border-gray-300">
-                     <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-5">
+                 
+                 <!-- Q5 -->
+                 <div class="faq-item-js animate-element border-b border-neutral-200 py-5 md:py-6 transition-colors duration-300">
+                     <button class="faq-question w-full flex justify-between items-center text-left py-2 font-display text-lg uppercase tracking-tight text-neutral-900 outline-none" aria-expanded="false" aria-controls="faq-answer-5">
                          <span>How do we schedule our sessions?</span>
-                         <span class="faq-icon" aria-hidden="true">+</span>
+                         <span class="faq-icon font-mono text-xl text-[#5D5FEF] transition-transform duration-300">&plus;</span>
                      </button>
-                     <div class="faq-answer" id="faq-answer-5" role="region">
-                         <p>Scheduling is managed through a dedicated online platform where you can easily view availability and book sessions that work best for you. We ensure a seamless and efficient process.</p>
+                     <div class="faq-answer overflow-hidden max-h-0 opacity-0 px-1" id="faq-answer-5" role="region">
+                          <p class="text-neutral-500 text-sm sm:text-base leading-relaxed pt-4 pb-2 font-sans">Scheduling is managed through a dedicated online platform where you can easily view availability and book sessions that work best for you. We ensure a seamless and efficient process.</p>
                      </div>
                  </div>
-                 <div class="faq-item-js animate-element animate-stagger-item border-b border-gray-300">
-                     <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-6">
+                 
+                 <!-- Q6 -->
+                 <div class="faq-item-js animate-element border-b border-neutral-200 py-5 md:py-6 transition-colors duration-300">
+                     <button class="faq-question w-full flex justify-between items-center text-left py-2 font-display text-lg uppercase tracking-tight text-neutral-900 outline-none" aria-expanded="false" aria-controls="faq-answer-6">
                          <span>How else do you help in between sessions?</span>
-                         <span class="faq-icon" aria-hidden="true">+</span>
+                         <span class="faq-icon font-mono text-xl text-[#5D5FEF] transition-transform duration-300">&plus;</span>
                      </button>
-                     <div class="faq-answer" id="faq-answer-6" role="region">
-                         <p>We believe in continuous support. Between sessions, you'll have access to your coach via asynchronous communication channels (like Slack or email) for quick check-ins, urgent questions, and sharing wins or challenges. We also provide relevant resources and tools.</p>
+                     <div class="faq-answer overflow-hidden max-h-0 opacity-0 px-1" id="faq-answer-6" role="region">
+                          <p class="text-neutral-500 text-sm sm:text-base leading-relaxed pt-4 pb-2 font-sans">We believe in continuous support. Between sessions, you'll have access to your coach via asynchronous communication channels (like Slack or email) for quick check-ins, urgent questions, and sharing wins or challenges. We also provide relevant resources and tools.</p>
                      </div>
                  </div>
+                 
              </div>
         </section>
 
-        <section class="animate-section py-20 px-4 sm:px-6 lg:px-8 bg-[#6C63FF] text-white relative overflow-hidden" role="region" aria-label="Final Call to Action">
-            <img src="https://images.unsplash.com/photo-1519671482749-fd09be7acce1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGFic3RyYWN0JTIwYmxvYnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=100&h=100&q=60" alt="Abstract decorative shape" class="absolute top-4 left-4 w-16 h-16 rounded-full opacity-30 hidden md:block transform -rotate-12" aria-hidden="true" onerror="this.onerror=null;this.src='https://placehold.co/100x100/cccccc/ffffff?text=Deco';">
-            <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YWJzdHJhY3QlMjBzaGFwZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=120&h=120&q=60" alt="Abstract decorative shape" class="absolute bottom-4 right-4 w-20 h-20 rounded-lg opacity-30 hidden md:block transform rotate-12" aria-hidden="true" onerror="this.onerror=null;this.src='https://placehold.co/120x120/cccccc/ffffff?text=Deco';">
-            <div class="max-w-4xl mx-auto text-center relative z-10">
-                  <h2 class="final-cta-headline animate-element text-4xl sm:text-5xl md:text-6xl font-bold uppercase tracking-tight mb-6">READY FOR AN UPLIFT?</h2>
-                  <p class="animate-element text-lg sm:text-xl text-purple-100 mb-10">We're on a mission to make scaling a company smoother by empowering founders to become extraordinary leaders.</p>
-                   <a href="mailto:hello@upliftco.example.com?subject=Inquiry%20from%20Website" class="btn btn-secondary animate-element bg-white text-[#6C63FF] px-10 py-4 rounded-md text-lg font-semibold shadow-lg no-underline">
-                       Tell Us About You
-                   </a>
+        <!-- Final CTA Section -->
+        <section class="animate-section py-24 md:py-36 px-4 sm:px-6 lg:px-8 bg-[#0C0C0E] text-white relative overflow-hidden" role="region" aria-label="Final Call to Action">
+            <img src="img/deco-shape-1.png" alt="Abstract decorative shape" class="absolute top-10 left-10 w-24 h-24 rounded-full opacity-10 hidden md:block transform -rotate-12 select-none" aria-hidden="true" onerror="this.onerror=null;this.src='https://placehold.co/100x100/cccccc/ffffff?text=Deco';">
+            <img src="img/deco-shape-2.png" alt="Abstract decorative shape" class="absolute bottom-10 right-10 w-32 h-32 rounded-lg opacity-10 hidden md:block transform rotate-12 select-none" aria-hidden="true" onerror="this.onerror=null;this.src='https://placehold.co/120x120/cccccc/ffffff?text=Deco';">
+            
+            <div class="max-w-5xl mx-auto text-center relative z-10">
+                  <h2 class="final-cta-headline animate-element font-display text-5xl sm:text-7xl lg:text-8xl font-black uppercase tracking-tighter mb-6 md:mb-8 leading-[1.05]">
+                      Ready for an uplift?
+                  </h2>
+                  <p class="animate-element text-lg sm:text-xl text-neutral-400 font-sans max-w-2xl mx-auto mb-8 md:mb-12 leading-relaxed">
+                      We're on a mission to make scaling a company smoother by empowering founders to become extraordinary leaders. Let's work together.
+                  </p>
+                  <div class="inline-block">
+                       <a href="mailto:hello@upliftco.example.com?subject=Inquiry%20from%20Website" class="btn btn-secondary bg-[#D2F53C] hover:bg-white text-black font-accent text-sm font-bold uppercase tracking-widest px-10 py-5 rounded-full transition-all duration-300 magnetic-btn">
+                           <span>Tell Us About You</span>
+                       </a>
+                  </div>
             </div>
         </section>
+
     </main>
 
-    <footer class="animate-section py-8 px-4 sm:px-6 lg:px-8 border-t border-gray-200 bg-white" role="contentinfo">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center text-center sm:text-left">
-             <div class="animate-element order-2 sm:order-1 mt-4 sm:mt-0">
-                 <a href="#" class="text-xs text-gray-500 hover:text-black mr-3">WHAT FOUNDERS SAY</a>
-                 <a href="#" class="text-xs text-gray-500 hover:text-black mr-3">MANIFESTO</a>
-                 <a href="#" class="text-xs text-gray-500 hover:text-black">ABOUT US</a>
+    <!-- Footer -->
+    <footer class="animate-section py-12 px-4 sm:px-6 lg:px-8 border-t border-neutral-200/50 bg-[#FAF8F5]" role="contentinfo">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+             
+             <!-- Navigation Links -->
+             <div class="animate-element flex space-x-6 order-2 md:order-1 mt-6 md:mt-0">
+                 <a href="#founders-say" class="rolling-link font-accent text-[10px] font-semibold tracking-widest text-neutral-400 uppercase">
+                     <span class="rolling-link-inner">
+                         <span class="rolling-link-text">What Founders Say</span>
+                         <span class="rolling-link-text text-[#111111]" aria-hidden="true">What Founders Say</span>
+                     </span>
+                 </a>
+                 <a href="#manifesto" class="rolling-link font-accent text-[10px] font-semibold tracking-widest text-neutral-400 uppercase">
+                     <span class="rolling-link-inner">
+                         <span class="rolling-link-text">Manifesto</span>
+                         <span class="rolling-link-text text-[#111111]" aria-hidden="true">Manifesto</span>
+                     </span>
+                 </a>
+                 <a href="#about-us" class="rolling-link font-accent text-[10px] font-semibold tracking-widest text-neutral-400 uppercase">
+                     <span class="rolling-link-inner">
+                         <span class="rolling-link-text">About Us</span>
+                         <span class="rolling-link-text text-[#111111]" aria-hidden="true">About Us</span>
+                     </span>
+                 </a>
              </div>
-             <div class="animate-element order-1 sm:order-2 flex flex-col sm:flex-row items-center">
-                 <p class="text-xs text-gray-500 mb-2 sm:mb-0 sm:mr-4">&copy; 2025 Uplift Founders</p>
-                 <span class="text-sm font-bold text-gray-800">UPLIFT FOUNDERS</span>
+             
+             <!-- Copyright / Signature -->
+             <div class="animate-element flex flex-col md:flex-row items-center order-1 md:order-2 space-y-2 md:space-y-0 md:space-x-6 text-center md:text-right">
+                 <p class="font-accent text-[10px] text-neutral-400 tracking-widest font-semibold">&copy; 2026 Uplift Founders</p>
+                 <span class="font-display font-black text-sm tracking-tight text-neutral-900 uppercase">Uplift Founders.</span>
              </div>
+             
         </div>
     </footer>
 
+    <!-- GSAP Core & ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
+    <!-- Lenis Smooth Scroll (Awwwards Industry Standard) -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    
+    <!-- Main Script Engine -->
     <script src="app.js"></script>
 
 </body>
